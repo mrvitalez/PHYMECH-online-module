@@ -15,7 +15,8 @@ Google Apps Script that grades them and writes one row per attempt into a Google
 
 The workbook **PHYMECH Online Modules: Activity Results** has already been shared with
 rmvitalez@rtu.edu.ph as an editor. It has a *Summary* tab and one tab per module
-(`M01 Vectors` … `M14 Periodic Motion`) with the column headers ready.
+(`M01 Vectors` … `M14 Periodic Motion`) with the column headers ready. Open it here:
+https://docs.google.com/spreadsheets/d/1HQKFK1ASk_DgDvQPlw4aR_6eGsyb10psXrXeqam0tnM/edit
 
 Signed in as **rmvitalez@rtu.edu.ph**:
 
@@ -27,7 +28,7 @@ Signed in as **rmvitalez@rtu.edu.ph**:
 
 1. In **your copy** of the sheet: **Extensions → Apps Script**.
 2. Delete the sample code in `Code.gs`. Open the file
-   **PHYMECH Apps Script (Code.gs) – PRIVATE, contains answer key** (shared with you in Drive),
+   **PHYMECH Apps Script (Code.gs) - PRIVATE, contains answer key.txt** (shared with you in Drive),
    copy all of its text and paste it into `Code.gs`. Click **Save**.
 3. Click **Deploy → New deployment**. Click the gear next to *Select type* and choose **Web app**.
    - Description: `PHYMECH activities`
@@ -49,8 +50,13 @@ answer the items and submit. A row should appear in that module's tab. Delete th
 
 ## Day-to-day
 
-- **Where results go:** each module tab gets one row per submission: timestamp, student details,
-  attempt number, score, percent, each item (the student's answer marked ✓ or ✗) and the reflection.
+- **Where results go:** each module tab gets one row per submission: timestamp, student number,
+  last / first / middle name, block and section, attempt number, score, percent, then for each item the
+  student's answer (marked ✓ or ✗) followed by the student's written solution, and finally the reflection.
+  Solutions keep any LaTeX the student typed between `$` signs (for example `$v = \sqrt{2gh}$`).
+- **What students see:** right after submitting, their score and which items are correct or wrong.
+  After their last attempt they also see the correct answer for each item they missed. To hide the
+  correct answers, set `REVEAL_ANSWERS_AFTER_LAST_ATTEMPT = false` in the script.
   The *Summary* tab shows the number of submissions and the average percent per module.
 - **Attempts:** students may submit each activity up to **2** times (counted by student number).
   To change this, edit `MAX_ATTEMPTS` at the top of the script. To give one student another try,
