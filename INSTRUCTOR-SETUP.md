@@ -27,7 +27,7 @@ repository, open its **Raw** view on GitHub, select all (Ctrl+A), copy, and past
 | Editor file | Type (the **+** next to *Files*) | Copy from |
 |-------------|------|-----------|
 | `Code.gs` | already exists; replace its contents | [`apps-script/Code.gs`](apps-script/Code.gs) |
-| `Seed.gs` | Script | the **private** Drive file *PHYMECH Seed.gs - PRIVATE answer key* shared with you (it holds the answer key, so it is not on GitHub) |
+| `Seed.gs` | Script | the **private** `Seed.gs` file you received separately (it holds the answer key, so it is not on GitHub) |
 | `Student` | HTML | [`apps-script/Student.html`](apps-script/Student.html) |
 | `Admin` | HTML | [`apps-script/Admin.html`](apps-script/Admin.html) |
 | `Styles` | HTML | [`apps-script/Styles.html`](apps-script/Styles.html) |
