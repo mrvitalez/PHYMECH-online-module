@@ -1,0 +1,565 @@
+<body>
+<div class="progress" id="progress"></div>
+<div class="banner">🔭 <b>PHYMECH · Mechanics</b> &nbsp;—&nbsp; a class of <b>Instr. Ryan M. Vitalez, LPT</b><span>&nbsp;·&nbsp; Rizal Technological University</span></div>
+<div id="app"><div class="loading"><div class="spinner"></div>Loading…</div></div>
+<button class="backtop" id="backtop" type="button" aria-label="Back to top">↑</button>
+
+<script>window.BOOT = /*BOOT*/null;</script>
+<script>
+window.MathJax = { tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+                   options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] },
+                   startup: { typeset: false } };
+</script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-chtml.js"></script>
+<script>
+(function () {
+  "use strict";
+
+  // Numeric items must have a written solution before the activity can be submitted.
+  var REQUIRE_NUMERIC_SOLUTIONS = true;
+
+  var BOOT = window.BOOT || {};
+  var app = document.getElementById("app");
+  var D = null;  // data for the current view
+
+  // ---------- helpers ----------
+  function esc(s) {
+    return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+    });
+  }
+  function link(params) { return BOOT.url + (params ? "?" + params : ""); }
+  function call(fn) {
+    var args = [].slice.call(arguments, 1);
+    return new Promise(function (resolve, reject) {
+      var r = google.script.run.withSuccessHandler(resolve).withFailureHandler(function (e) {
+        reject(e && e.message ? e : new Error(String(e)));
+      });
+      r[fn].apply(r, args);
+    });
+  }
+  function typeset(el) {
+    function go() {
+      if (window.MathJax && MathJax.typesetPromise) {
+        if (MathJax.typesetClear) MathJax.typesetClear([el]);
+        return MathJax.typesetPromise([el]).catch(function () {});
+      }
+      setTimeout(go, 300);
+    }
+    go();
+  }
+  function store(key, v) { try { localStorage.setItem(key, JSON.stringify(v)); } catch (e) { /* storage unavailable */ } }
+  function load(key) { try { return JSON.parse(localStorage.getItem(key) || "null"); } catch (e) { return null; } }
+  function nice(ymd) {
+    if (!ymd) return "";
+    var p = ymd.split("-").map(Number);
+    return ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"][p[1] - 1] + " " + p[2] + ", " + p[0];
+  }
+  function heroHead(man) {
+    return '<img class="logo" src="' + esc(man.logo) + '" alt="Rizal Technological University seal">';
+  }
+  function who() {
+    return '<span class="who">🎓 ' + esc(BOOT.email) + '</span>';
+  }
+
+  // ---------- home ----------
+  function renderHome(d) {
+    document.body.className = "landing";
+    var man = d.manifest, sem = d.semester;
+    var byN = {};
+    d.modules.forEach(function (m) { byN[m.n] = m; });
+    var notice = "";
+    if (sem.phase === "before") notice = '<div class="notice">⏳ <b>The semester starts on ' + nice(sem.start) + '.</b> The modules will open then.</div>';
+    else if (sem.phase === "after") notice = '<div class="notice">📕 <b>The semester ended on ' + nice(sem.end) + '.</b> You can still review open lessons, but activities are closed.</div>';
+    if (sem.announcement) notice += '<div class="notice">📣 ' + esc(sem.announcement) + '</div>';
+
+    var done = d.modules.filter(function (m) { return m.attempts > 0; }).length;
+    var parts = man.parts.map(function (p) {
+      var cards = p.modules.map(function (n) {
+        var m = byN[n];
+        if (!m) return "";
+        var badge = m.attempts > 0 ? '<span class="badge done">Done · ' + m.best + "/" + m.total + "</span>"
+          : m.state.canSubmit ? '<span class="badge open">Open</span>'
+          : '<span class="badge closed">' + (m.state.canView ? "View only" : "Locked") + "</span>";
+        var topics = m.topics.map(function (t) { return "<li>" + esc(t) + "</li>"; }).join("");
+        var due = m.state.dueOn ? '<p style="font-size:.82rem;color:#FFE3A6;flex:0">Activity due ' + nice(m.state.dueOn) + "</p>" : "";
+        var links = m.state.canView
+          ? '<a class="cl amber" target="_top" href="' + esc(link("module=" + n)) + '">📖 Lesson & video</a>' +
+            '<a class="cl ghost" target="_top" href="' + esc(link("module=" + n)) + '#activity">✍️ Activity</a>'
+          : '<span class="cl ghost">🔒 ' + esc(m.state.reason) + "</span>";
+        return '<article class="chapter' + (m.state.canView ? "" : " locked") + '"><div class="cnum">' + esc(m.icon) +
+          " <span>Module " + n + "</span>" + badge + "</div><h3>" + esc(m.title) + "</h3><p>" + esc(m.overview) +
+          '</p><ul class="topics">' + topics + "</ul>" + due + '<div class="clinks">' + links + "</div></article>";
+      }).join("");
+      return '<h2 class="section">' + esc(p.title) + '</h2><p class="sub"><b>' + esc(p.span) + ".</b> " + esc(p.blurb) +
+        '</p><div class="grid">' + cards + "</div>";
+    }).join("");
+
+    var name = d.profile ? esc(d.profile.firstName) : "";
+    app.innerHTML =
+      '<header class="hero"><div class="inner">' + heroHead(man) + '<div class="txt">' +
+      '<span class="eyebrow">🔭 ' + esc(man.university) + " · " + esc(man.department) + "</span>" +
+      "<h1><small>" + esc(man.course) + " · " + esc(man.program) + "</small>" + esc(man.courseTitle) + "</h1>" +
+      "<p>" + (name ? "Welcome back, <b>" + name + "</b>! " : "Welcome! ") +
+      "Each module has a short discussion, worked examples, a lecture video with questions, and a graded activity.</p>" +
+      '<div class="hchips">' + who() + "<span>📅 " + esc(sem.name || "") + "</span><span>✅ " + done + " of " +
+      d.modules.length + " activities done</span>" +
+      (d.maxAttempts ? "<span>🔁 " + d.maxAttempts + " attempts per activity</span>" : "") + "</div>" +
+      notice + "</div></div></header>" +
+      '<div class="wrap">' + parts + "</div>" + footer(man);
+  }
+
+  function footer(man) {
+    return '<footer class="site-foot"><div class="in"><p><b>' + esc(man.course) + " · " + esc(man.courseTitle) +
+      "</b>. " + esc(man.university) + ". Online modules by <b>" + esc(man.instructor) + "</b>.</p>" +
+      '<p><a target="_top" href="' + esc(link("")) + '">Course home</a></p></div></footer>';
+  }
+
+  // ---------- module ----------
+  function renderModule(d) {
+    document.body.className = "";
+    var m = d.module, man = d.manifest, n = m.n;
+    var hero = '<header class="hero" data-num="' + (n < 10 ? "0" : "") + n + '"><div class="inner">' + heroHead(man) +
+      '<div class="txt"><div class="crumbs"><a target="_top" href="' + esc(link("")) + '">⌂ Course Home</a>' +
+      (d.lessonHtml ? '<a href="#video">🎬 Video</a><a href="#activity">✍️ Activity</a>' : "") + "</div>" +
+      '<span class="eyebrow">' + esc(man.course) + " · Module " + n + " of " + man.count + "</span>" +
+      "<h1>" + esc(m.title) + " <em>· Online Module</em></h1><p>" + esc(m.overview) + "</p>" +
+      '<div class="hchips">' + who() + (d.state.dueOn ? "<span>📅 Activity due " + nice(d.state.dueOn) + "</span>" : "") +
+      "</div></div></div></header>";
+
+    if (!d.state.canView) {
+      app.innerHTML = hero + '<main><section class="ch"><h2>🔒 Not available yet</h2><p>' + esc(d.state.reason) +
+        '</p><p><a target="_top" href="' + esc(link("")) + '">← Back to all modules</a></p></section></main>' + footer(man);
+      return;
+    }
+
+    var navItems = [["#objectives", "Objectives"]].concat(m.sections.map(function (s, i) {
+      return ["#s" + (i + 1), s[0] ? "§" + s[0] : s[1]];
+    }), [["#takeaways", "Takeaways"], ["#examples", "Examples"], ["#video", "Video"], ["#activity", "Activity"]]);
+    var nav = '<nav class="top" aria-label="Module sections"><div class="in"><a class="home" target="_top" href="' +
+      esc(link("")) + '">⌂ Home</a>' + navItems.map(function (x) {
+        return '<a href="' + x[0] + '">' + esc(x[1]) + "</a>";
+      }).join("") + "</div></nav>";
+
+    var prev = n > 1 ? '<a target="_top" href="' + esc(link("module=" + (n - 1))) + '"><small>← Previous</small>Module ' + (n - 1) + ": " + esc(man.titles[n - 2]) + "</a>"
+      : '<a target="_top" href="' + esc(link("")) + '"><small>←</small>Course home</a>';
+    var next = n < man.count ? '<a class="next" target="_top" href="' + esc(link("module=" + (n + 1))) + '"><small>Next →</small>Module ' + (n + 1) + ": " + esc(man.titles[n]) + "</a>"
+      : '<a class="next" target="_top" href="' + esc(link("")) + '"><small>→</small>Course home</a>';
+
+    app.innerHTML = hero + nav + "<main>" + d.lessonHtml + videoSection(d) + activitySection(d) +
+      '<div class="chnav">' + prev + next + "</div></main>" + footer(man);
+
+    typeset(app);
+    initVideo(d);
+    initActivity(d);
+    initScroll();
+    if (location.hash) {
+      var t = document.querySelector(location.hash);
+      if (t) setTimeout(function () { t.scrollIntoView(); }, 200);
+    }
+  }
+
+  // ---------- video ----------
+  function videoSection(d) {
+    var v = d.video;
+    if (!v) return '<section class="ch" id="video"><h2><span class="num">🎬</span>Lecture video</h2><p class="muted">No video has been set for this module yet.</p></section>';
+    var watch = "https://www.youtube.com/watch?v=" + encodeURIComponent(v.youtubeId);
+    var list = v.checkpoints.map(function (c, i) {
+      return '<li id="cp-item-' + i + '"><span class="when">Question ' + (i + 1) + " · " + esc(atLabel(c.at)) + "</span>" +
+        "<p><b>" + esc(c.q) + '</b></p><div class="cp-choices">' + c.choices.map(function (ch, j) {
+          return '<button type="button" data-cp="' + i + '" data-choice="' + j + '">' + String.fromCharCode(65 + j) + ". " + esc(ch) + "</button>";
+        }).join("") + '</div><div class="cp-feedback"></div></li>';
+    }).join("");
+    return '<section class="ch" id="video"><h2><span class="num">🎬</span>Lecture video</h2>' +
+      '<p class="lead">Watch the lecture. It pauses at ' + v.checkpoints.length + " questions; answer each one to keep going." +
+      " Your answers are recorded (they are not part of your activity score).</p>" +
+      '<div class="video-wrap"><div id="yt"></div><div class="cp-overlay" id="cp-overlay" hidden></div></div>' +
+      '<div class="cite"><b>Source:</b> “' + esc(v.title) + "”" + (v.speaker ? ", " + esc(v.speaker) : "") + ". " +
+      esc(v.source || "") + (v.sourceUrl ? ' (<a href="' + esc(v.sourceUrl) + '" target="_blank" rel="noopener">' + esc(v.sourceUrl) + "</a>)" : "") +
+      (v.license ? ". License: " + esc(v.license) : "") + '. <a href="' + esc(watch) + '" target="_blank" rel="noopener">Open on YouTube</a>.</div>' +
+      '<h3>Video questions</h3><p class="muted">If the video does not play here, open it on YouTube and answer these as you watch.</p>' +
+      '<ul class="cp-list">' + list + "</ul></section>";
+  }
+
+  function atLabel(at) {
+    at = String(at).trim();
+    if (/%$/.test(at)) return Number(at.slice(0, -1)) >= 100 ? "at the end" : "about " + at + " through";
+    var s = /:/.test(at) ? Number(at.split(":")[0]) * 60 + Number(at.split(":")[1]) : Number(at);
+    return "at " + Math.floor(s / 60) + ":" + ("0" + Math.floor(s % 60)).slice(-2);
+  }
+  function atSeconds(at, dur) {
+    at = String(at).trim();
+    if (/%$/.test(at)) return Math.min(Number(at.slice(0, -1)) / 100 * dur, dur - 1);
+    if (/:/.test(at)) return Number(at.split(":")[0]) * 60 + Number(at.split(":")[1]);
+    return Math.min(Number(at), dur - 1);
+  }
+
+  function initVideo(d) {
+    var v = d.video;
+    if (!v) return;
+    var answered = d.videoAnswers || {};
+    var overlay = document.getElementById("cp-overlay");
+    var player = null, times = [], active = -1;
+
+    Object.keys(answered).forEach(function (i) { markAnswered(Number(i), answered[i].choice, answered[i].correct, null, null); });
+
+    function markAnswered(i, choice, correct, answer, explain) {
+      var li = document.getElementById("cp-item-" + i);
+      if (!li) return;
+      li.classList.add("answered");
+      li.querySelectorAll("button").forEach(function (b) {
+        b.disabled = true;
+        if (Number(b.dataset.choice) === choice) b.classList.add(correct ? "right" : "picked-wrong");
+        if (answer != null && Number(b.dataset.choice) === answer) b.classList.add("right");
+      });
+      li.querySelector(".cp-feedback").innerHTML = (correct ? '<span class="ok">✓ Correct.</span> ' : '<span class="no">✗ Not quite.</span> ') + esc(explain || "");
+    }
+
+    function answer(i, choice, inOverlay) {
+      var btns = (inOverlay ? overlay : document.getElementById("cp-item-" + i)).querySelectorAll("button[data-choice]");
+      btns.forEach(function (b) { b.disabled = true; });
+      call("api_checkpoint", d.module.n, i, choice).then(function (res) {
+        answered[i] = { choice: choice, correct: res.correct };
+        markAnswered(i, choice, res.correct, res.answer, res.explain);
+        if (inOverlay) {
+          btns.forEach(function (b) {
+            if (Number(b.dataset.choice) === res.answer) b.classList.add("right");
+            else if (Number(b.dataset.choice) === choice) b.classList.add("picked-wrong");
+          });
+          overlay.querySelector(".cp-feedback").innerHTML = (res.correct ? '<span class="ok">✓ Correct!</span> ' : '<span class="no">✗ Not quite.</span> ') +
+            esc(res.explain) + '<p><button type="button" class="btn small" id="cp-continue">Continue the video ▶</button></p>';
+          document.getElementById("cp-continue").onclick = function () {
+            overlay.hidden = true;
+            active = -1;
+            if (player && player.playVideo) player.playVideo();
+          };
+        }
+      }).catch(function (e) {
+        btns.forEach(function (b) { b.disabled = false; });
+        alert("Could not save your answer: " + e.message);
+      });
+    }
+
+    document.querySelectorAll(".cp-list button[data-cp]").forEach(function (b) {
+      b.addEventListener("click", function () { answer(Number(b.dataset.cp), Number(b.dataset.choice), false); });
+    });
+
+    function ask(i) {
+      if (answered[i] || active === i) return;
+      active = i;
+      if (player && player.pauseVideo) player.pauseVideo();
+      var c = v.checkpoints[i];
+      overlay.innerHTML = '<div class="cp-card"><div class="k">Video question ' + (i + 1) + " of " + v.checkpoints.length +
+        '</div><div class="q">' + esc(c.q) + '</div><div class="cp-choices">' + c.choices.map(function (ch, j) {
+          return '<button type="button" data-choice="' + j + '">' + String.fromCharCode(65 + j) + ". " + esc(ch) + "</button>";
+        }).join("") + '</div><div class="cp-feedback"></div></div>';
+      overlay.hidden = false;
+      overlay.querySelectorAll("button[data-choice]").forEach(function (b) {
+        b.addEventListener("click", function () { answer(i, Number(b.dataset.choice), true); });
+      });
+    }
+
+    function tick() {
+      if (!player || !player.getCurrentTime || !times.length || active >= 0) return;
+      var t = player.getCurrentTime();
+      for (var i = 0; i < times.length; i++) {
+        if (answered[i]) continue;
+        if (t >= times[i]) {
+          // Skipping ahead brings the student back to the first unanswered question.
+          if (t > times[i] + 3 && player.seekTo) player.seekTo(times[i], true);
+          ask(i);
+        }
+        break;
+      }
+    }
+
+    window.onYouTubeIframeAPIReady = function () {
+      player = new YT.Player("yt", {
+        videoId: v.youtubeId,
+        playerVars: { rel: 0, modestbranding: 1, playsinline: 1 },
+        events: {
+          onReady: function () {
+            var dur = player.getDuration() || 0;
+            times = v.checkpoints.map(function (c) { return atSeconds(c.at, dur || 600); });
+            setInterval(tick, 400);
+          },
+          onStateChange: function (e) {
+            if (e.data === 0) {  // ended: ask anything left
+              for (var i = 0; i < v.checkpoints.length; i++) if (!answered[i]) { ask(i); break; }
+            }
+          },
+          onError: function () {
+            document.querySelector(".video-wrap").outerHTML = '<div class="notice">⚠️ This video cannot be played inside the page. ' +
+              '<a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=' + encodeURIComponent(v.youtubeId) +
+              '">Open it on YouTube</a> and answer the video questions below as you watch.</div>';
+          }
+        }
+      });
+    };
+    function noPlayer() {
+      var wrap = document.querySelector(".video-wrap");
+      if (!wrap) return;
+      wrap.outerHTML = '<div class="notice">⚠️ The video player could not load here (YouTube may be blocked on this network). ' +
+        '<a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=' + encodeURIComponent(v.youtubeId) +
+        '">Open it on YouTube</a> and answer the video questions below as you watch.</div>';
+    }
+    var s = document.createElement("script");
+    s.src = "https://www.youtube.com/iframe_api";
+    s.onerror = noPlayer;
+    document.body.appendChild(s);
+    setTimeout(function () { if (!player) noPlayer(); }, 15000);
+  }
+
+  // ---------- activity ----------
+  function activitySection(d) {
+    var m = d.module, st = d.state, p = d.profile || {};
+    var max = d.maxAttempts;
+    var used = d.attempts || 0;
+    var status = st.canSubmit
+      ? "Attempts used: <b>" + used + (max ? " of " + max : "") + "</b>" + (d.best != null ? " · Best score so far: <b>" + d.best + "/" + d.total + "</b>" : "") +
+        (st.dueOn ? " · Due <b>" + nice(st.dueOn) + "</b>" : "")
+      : "🔒 " + esc(st.reason) + (d.best != null ? " Your best score: <b>" + d.best + "/" + d.total + "</b>." : "");
+    var opts = (d.sections || []).map(function (s) {
+      return '<option value="' + esc(s) + '"' + (s === p.blockSection ? " selected" : "") + ">" + esc(s) + "</option>";
+    }).join("");
+    var sectionField = d.sections && d.sections.length
+      ? '<select data-student="blockSection" required><option value="">Choose…</option>' + opts + "</select>"
+      : '<input type="text" data-student="blockSection" value="' + esc(p.blockSection || "") + '" required>';
+    return '<section class="ch accent" id="activity"><h2><span class="num">✍️</span>' + esc(m.activityTitle) + "</h2>" +
+      '<div class="notice">' + status + "</div>" + d.activityHtml +
+      '<form id="activity-form" novalidate' + (st.canSubmit ? "" : ' class="closed"') + ">" +
+      '<div class="student"><h3>🎓 Your details</h3><div class="student-grid">' +
+      '<label class="field">RTU email<input type="text" value="' + esc(BOOT.email) + '" disabled></label>' +
+      '<label class="field">Last name<input type="text" data-student="lastName" autocomplete="family-name" value="' + esc(p.lastName || "") + '" required></label>' +
+      '<label class="field">First name<input type="text" data-student="firstName" autocomplete="given-name" value="' + esc(p.firstName || "") + '" required></label>' +
+      '<label class="field">Middle name<input type="text" data-student="middleName" value="' + esc(p.middleName || "") + '" placeholder="Leave blank if none"></label>' +
+      '<label class="field">Student number<input type="text" data-student="studentNo" value="' + esc(p.studentNo || "") + '" required></label>' +
+      '<label class="field">Block and section' + sectionField + "</label></div></div>" +
+      '<p class="consent">Your RTU email, details, answers, solutions and score are recorded for your instructor. ' +
+      "Your work is also saved as a draft on this device until you submit.</p>" +
+      '<div class="btnrow"><button class="btn" id="submit-btn" type="submit"' + (st.canSubmit ? "" : " disabled") + ">Submit activity</button></div>" +
+      '<div id="activity-status" class="status" role="status" aria-live="polite"></div></form></section>';
+  }
+
+  function initActivity(d) {
+    var form = document.getElementById("activity-form");
+    if (!form) return;
+    var itemsBox = document.getElementById("activity-items");
+    var statusBox = document.getElementById("activity-status");
+    var submitBtn = document.getElementById("submit-btn");
+    var draftKey = "phymech-draft-" + BOOT.email + "-" + d.module.n;
+    // The items live outside the form element in the fragment; move them in, before the details card.
+    form.insertBefore(itemsBox, form.firstChild.nextSibling);
+
+    function show(kind, html) {
+      statusBox.className = "status show " + kind;
+      statusBox.innerHTML = html;
+      statusBox.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    }
+
+    // Equation toolbar and live preview
+    function insertAtCursor(ta, text, isLatex) {
+      var start = ta.selectionStart, end = ta.selectionEnd, v = ta.value;
+      if (isLatex) {
+        var inside = (v.slice(0, start).match(/\$/g) || []).length % 2 === 1;
+        if (!inside) text = "$" + text + "$";
+      }
+      ta.value = v.slice(0, start) + text + v.slice(end);
+      var caret = start + text.length - (isLatex && text.charAt(text.length - 1) === "$" ? 1 : 0);
+      ta.focus();
+      ta.setSelectionRange(caret, caret);
+      ta.dispatchEvent(new Event("input", { bubbles: true }));
+    }
+    var timers = {};
+    function preview(ta) {
+      var box = ta.closest(".solution-box").querySelector(".sol-preview");
+      clearTimeout(timers[ta.id]);
+      timers[ta.id] = setTimeout(function () {
+        box.textContent = ta.value.replace(/\$\$([^$]+)\$\$/g, "\\[$1\\]").replace(/\$([^$]+)\$/g, "\\($1\\)");
+        typeset(box);
+      }, 300);
+    }
+    form.querySelectorAll(".solution-box").forEach(function (sb) {
+      var ta = sb.querySelector("textarea");
+      sb.querySelectorAll(".sym").forEach(function (b) {
+        b.addEventListener("mousedown", function (e) { e.preventDefault(); });
+        b.addEventListener("click", function () { insertAtCursor(ta, b.dataset.insert, b.dataset.latex === "1"); });
+      });
+      ta.addEventListener("input", function () { preview(ta); });
+    });
+
+    function collect() {
+      var data = { student: {}, answers: {}, solutions: {} };
+      form.querySelectorAll("[data-student]").forEach(function (el) { data.student[el.dataset.student] = el.value.trim(); });
+      form.querySelectorAll(".item").forEach(function (item) {
+        var id = item.dataset.id;
+        if (item.dataset.type === "mc") {
+          var picked = item.querySelector("input[type=radio]:checked");
+          data.answers[id] = picked ? Number(picked.value) : "";
+        } else if (item.dataset.type === "numeric") {
+          data.answers[id] = item.querySelector(".answer-row input").value.trim();
+        } else {
+          data.answers[id] = item.querySelector("textarea.reflection").value.trim();
+        }
+        var sol = item.querySelector(".sol-input");
+        if (sol) data.solutions[id] = sol.value.trim();
+      });
+      return data;
+    }
+
+    // Restore draft
+    var draft = load(draftKey) || {};
+    form.querySelectorAll(".item").forEach(function (item) {
+      var id = item.dataset.id, v = (draft.answers || {})[id];
+      if (v !== undefined && v !== "") {
+        if (item.dataset.type === "mc") {
+          var r = item.querySelector('input[type=radio][value="' + v + '"]');
+          if (r) r.checked = true;
+        } else if (item.dataset.type === "numeric") item.querySelector(".answer-row input").value = v;
+        else item.querySelector("textarea.reflection").value = v;
+      }
+      var sol = item.querySelector(".sol-input");
+      if (sol && (draft.solutions || {})[id]) { sol.value = draft.solutions[id]; preview(sol); }
+    });
+    form.addEventListener("input", function () {
+      var c = collect();
+      store(draftKey, { answers: c.answers, solutions: c.solutions });
+    });
+    form.addEventListener("change", function () {
+      var c = collect();
+      store(draftKey, { answers: c.answers, solutions: c.solutions });
+    });
+
+    if (!d.state.canSubmit) {
+      form.querySelectorAll("input, textarea, select, button").forEach(function (el) { el.disabled = true; });
+      return;
+    }
+
+    function parseNumber(s) {
+      var t = String(s).replace(/\s+/g, "").replace(/[−–]/g, "-");
+      t = /^[-+]?\d{1,3}(,\d{3})+(\.\d+)?$/.test(t) ? t.replace(/,/g, "") : t.replace(/,/g, ".");
+      var m = t.match(/^([-+]?\d*\.?\d+)(?:[x×*]10\^?([-+]?\d+))?$/i);
+      if (m) return Number(m[1]) * Math.pow(10, m[2] ? Number(m[2]) : 0);
+      return Number(t);
+    }
+    function label(n) { return "Item " + n; }
+
+    function showFeedback(res) {
+      var right = [], wrong = [];
+      form.querySelectorAll(".item").forEach(function (item, i) {
+        var id = item.dataset.id, verdict = res.results ? res.results[id] : undefined;
+        var v = item.querySelector(".verdict");
+        item.classList.remove("correct", "wrong");
+        v.textContent = "";
+        if (verdict === true) { item.classList.add("correct"); v.textContent = "✓ Correct"; right.push(i + 1); }
+        else if (verdict === false) {
+          item.classList.add("wrong");
+          wrong.push(i + 1);
+          var msg = "✗ Mistake.";
+          if (res.key && res.key[id] !== undefined && res.key[id] !== "") {
+            if (item.dataset.type === "mc") {
+              var choice = item.querySelectorAll(".choice-text")[res.key[id]];
+              msg += " Correct answer: " + String.fromCharCode(65 + Number(res.key[id])) + ". " + (choice ? choice.textContent : "");
+            } else {
+              var unit = item.querySelector(".unit");
+              msg += " Correct answer: " + Number(Number(res.key[id]).toPrecision(4)) + (unit ? " " + unit.textContent : "");
+            }
+          } else msg += " Check your solution against the discussion and the worked examples.";
+          v.textContent = msg;
+        }
+      });
+      return { right: right, wrong: wrong };
+    }
+
+    form.addEventListener("submit", function (ev) {
+      ev.preventDefault();
+      var data = collect(), s = data.student;
+      if (!s.lastName || !s.firstName || !s.studentNo || !s.blockSection) {
+        show("err", "Please fill in your last name, first name, student number, and block and section.");
+        return;
+      }
+      var missing = [], bad = [], noSol = [];
+      form.querySelectorAll(".item").forEach(function (item, i) {
+        var id = item.dataset.id, v = data.answers[id];
+        if (v === "" || v === undefined) missing.push(i + 1);
+        else if (item.dataset.type === "numeric" && !isFinite(parseNumber(v))) bad.push(i + 1);
+        if (REQUIRE_NUMERIC_SOLUTIONS && item.dataset.type === "numeric" && !data.solutions[id]) noSol.push(i + 1);
+      });
+      if (missing.length) { show("err", "Please answer every item before submitting. Missing: item " + missing.join(", ") + "."); return; }
+      if (bad.length) { show("err", "Final answers must be plain numbers (for example 3.77 or 1.5e3). Check item " + bad.join(", ") + "."); return; }
+      if (noSol.length) { show("err", "Please write your solution for item " + noSol.join(", ") + " in its solution box."); return; }
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = "Submitting…";
+      show("info", "Sending your answers to your instructor…");
+      call("api_submit", d.module.n, { student: s, answers: data.answers, solutions: data.solutions }).then(function (res) {
+        var fb = showFeedback(res);
+        var left = res.attemptsLeft < 0 ? "You may submit again if you wish."
+          : res.attemptsLeft > 0 ? "You have " + res.attemptsLeft + " attempt" + (res.attemptsLeft === 1 ? "" : "s") + " left. Fix the items marked ✗ and submit again if you wish."
+          : "This was your last attempt." + (res.key ? " The correct answers are now shown under your mistakes." : "");
+        show("ok", "<strong>Submitted!</strong> Attempt " + res.attempt + ". Your score: <strong>" + res.score + " / " + res.total + "</strong>" +
+          "<br>Correct: " + (fb.right.length ? fb.right.map(label).join(", ") : "none") +
+          "<br>Mistakes: " + (fb.wrong.length ? fb.wrong.map(label).join(", ") : "none. Excellent work!") +
+          "<br>" + left + "<br><small>Your result has been recorded.</small>");
+        if (res.attemptsLeft === 0) {
+          submitBtn.disabled = true;
+          submitBtn.textContent = "No attempts left";
+          return;
+        }
+        submitBtn.disabled = false;
+        submitBtn.textContent = "Submit activity";
+      }).catch(function (e) {
+        show("err", "Submission failed: " + esc(e.message));
+        submitBtn.disabled = false;
+        submitBtn.textContent = "Submit activity";
+      });
+    });
+  }
+
+  // ---------- page chrome ----------
+  function initScroll() {
+    var progress = document.getElementById("progress"), backtop = document.getElementById("backtop");
+    var links = [].slice.call(document.querySelectorAll("nav.top a:not(.home)"));
+    var sections = [].slice.call(document.querySelectorAll("main section[id]"));
+    function update() {
+      var h = document.documentElement, max = h.scrollHeight - h.clientHeight;
+      progress.style.width = (max ? 100 * h.scrollTop / max : 0) + "%";
+      backtop.classList.toggle("show", h.scrollTop > 500);
+      var current = sections.length ? sections[0].id : "";
+      sections.forEach(function (s) { if (s.getBoundingClientRect().top <= 90) current = s.id; });
+      links.forEach(function (a) {
+        var on = a.getAttribute("href") === "#" + current;
+        a.classList.toggle("active", on);
+        if (on) {
+          var nav = a.parentNode, l = a.offsetLeft, r = l + a.offsetWidth;
+          if (l < nav.scrollLeft || r > nav.scrollLeft + nav.clientWidth) nav.scrollLeft = l - 40;
+        }
+      });
+    }
+    addEventListener("scroll", update, { passive: true });
+    update();
+  }
+  document.getElementById("backtop").addEventListener("click", function () { window.scrollTo({ top: 0, behavior: "smooth" }); });
+
+  function fail(msg) {
+    app.innerHTML = '<main><section class="ch"><h2>Something went wrong</h2><p>' + esc(msg) +
+      '</p><p><a target="_top" href="' + esc(link("")) + '">Try again</a></p></section></main>';
+  }
+
+  function start() {
+    if (BOOT.error) return fail(BOOT.error);
+    D = BOOT.data;
+    if (!D) {
+      var p = BOOT.module ? call("api_module", BOOT.module) : call("api_home");
+      p.then(function (d) { D = d; route(); }).catch(function (e) { fail(e.message); });
+      return;
+    }
+    route();
+  }
+  function route() {
+    if (D.view === "module") renderModule(D); else renderHome(D);
+  }
+  start();
+})();
+</script>
+</body>

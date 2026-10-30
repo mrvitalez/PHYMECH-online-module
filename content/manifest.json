@@ -1,0 +1,1394 @@
+{
+ "course": "PHYMECH",
+ "courseTitle": "Mechanics",
+ "instructor": "Instr. Ryan M. Vitalez, LPT",
+ "university": "Rizal Technological University",
+ "department": "Department of Earth and Space Sciences",
+ "program": "Bachelor of Science in Astronomy",
+ "logo": "https://raw.githubusercontent.com/mrvitalez/PHYMECH-online-module/main/img/rtu-logo.jpg",
+ "parts": [
+  {
+   "title": "Part I · Describing Motion",
+   "span": "Modules 1-3",
+   "blurb": "Vectors and the kinematics of rovers, spacecraft and crater ejecta in one, two and three dimensions.",
+   "modules": [
+    1,
+    2,
+    3
+   ]
+  },
+  {
+   "title": "Part II · Forces and Newton's Laws",
+   "span": "Modules 4-5",
+   "blurb": "Why things move: forces, free-body diagrams, friction, and circular motion of moons and satellites.",
+   "modules": [
+    4,
+    5
+   ]
+  },
+  {
+   "title": "Part III · Energy and Momentum",
+   "span": "Modules 6-8",
+   "blurb": "Work, energy conservation, collisions and rockets: the bookkeeping of every orbital maneuver.",
+   "modules": [
+    6,
+    7,
+    8
+   ]
+  },
+  {
+   "title": "Part IV · Rotation and Equilibrium",
+   "span": "Modules 9-11",
+   "blurb": "Spinning planets and pulsars, torque, angular momentum, and the strength of rock and ice.",
+   "modules": [
+    9,
+    10,
+    11
+   ]
+  },
+  {
+   "title": "Part V · Fluids, Gravitation and Oscillations",
+   "span": "Modules 12-14",
+   "blurb": "Atmospheres and oceans, Newton's gravitation and Kepler's laws, and periodic motion.",
+   "modules": [
+    12,
+    13,
+    14
+   ]
+  }
+ ],
+ "modules": [
+  {
+   "n": 1,
+   "title": "Vectors",
+   "tab": "M01 Vectors",
+   "icon": "🧭",
+   "overview": "Pointing a telescope or steering a spacecraft needs more than “how much”: it needs “which way”. This module gives you the language of vectors that the rest of mechanics is written in.",
+   "topics": [
+    "Vectors and Scalars, Intuitively",
+    "Components of a Vector",
+    "Unit Vectors",
+    "Addition, Subtraction, and Products of Vectors"
+   ],
+   "sections": [
+    [
+     "1.1",
+     "Vectors and Scalars, Intuitively"
+    ],
+    [
+     "1.2",
+     "Components of a Vector"
+    ],
+    [
+     "1.3",
+     "Unit Vectors"
+    ],
+    [
+     "1.4",
+     "Addition, Subtraction, and Products of Vectors"
+    ]
+   ],
+   "items": [
+    {
+     "id": "q1",
+     "type": "numeric",
+     "unit": "km",
+     "choices": 0
+    },
+    {
+     "id": "q2",
+     "type": "numeric",
+     "unit": "km",
+     "choices": 0
+    },
+    {
+     "id": "q3",
+     "type": "numeric",
+     "unit": "degrees",
+     "choices": 0
+    },
+    {
+     "id": "q4",
+     "type": "mc",
+     "unit": "",
+     "choices": 4
+    },
+    {
+     "id": "q5",
+     "type": "numeric",
+     "unit": "",
+     "choices": 0
+    },
+    {
+     "id": "q6",
+     "type": "numeric",
+     "unit": "km",
+     "choices": 0
+    },
+    {
+     "id": "q7",
+     "type": "numeric",
+     "unit": "degrees",
+     "choices": 0
+    },
+    {
+     "id": "q8",
+     "type": "mc",
+     "unit": "",
+     "choices": 4
+    },
+    {
+     "id": "reflection",
+     "type": "text",
+     "unit": "",
+     "choices": 0
+    }
+   ],
+   "activityTitle": "Activity 1: Vector Navigator"
+  },
+  {
+   "n": 2,
+   "title": "Motion along a Straight Line",
+   "tab": "M02 1D Motion",
+   "icon": "📏",
+   "overview": "From a Mars rover inching toward a rock to a rocket roaring off its pad, straight-line motion is where kinematics begins. Here you learn to describe position, velocity and acceleration precisely, and to predict motion when the acceleration is constant or changes with time.",
+   "topics": [
+    "Displacement, Time, and Average Velocity",
+    "Instantaneous Velocity",
+    "Average and Instantaneous Acceleration",
+    "Motion with Constant Acceleration"
+   ],
+   "sections": [
+    [
+     "2.1",
+     "Displacement, Time, and Average Velocity"
+    ],
+    [
+     "2.2",
+     "Instantaneous Velocity"
+    ],
+    [
+     "2.3",
+     "Average and Instantaneous Acceleration"
+    ],
+    [
+     "2.4",
+     "Motion with Constant Acceleration"
+    ],
+    [
+     "2.5",
+     "Freely Falling Objects"
+    ],
+    [
+     "2.6",
+     "Velocity and Position by Integration"
+    ]
+   ],
+   "items": [
+    {
+     "id": "q1",
+     "type": "numeric",
+     "unit": "cm/s",
+     "choices": 0
+    },
+    {
+     "id": "q2",
+     "type": "numeric",
+     "unit": "m/s",
+     "choices": 0
+    },
+    {
+     "id": "q3",
+     "type": "mc",
+     "unit": "",
+     "choices": 4
+    },
+    {
+     "id": "q4",
+     "type": "numeric",
+     "unit": "m/s²",
+     "choices": 0
+    },
+    {
+     "id": "q5",
+     "type": "numeric",
+     "unit": "m/s²",
+     "choices": 0
+    },
+    {
+     "id": "q6",
+     "type": "numeric",
+     "unit": "s",
+     "choices": 0
+    },
+    {
+     "id": "q7",
+     "type": "numeric",
+     "unit": "m/s",
+     "choices": 0
+    },
+    {
+     "id": "q8",
+     "type": "mc",
+     "unit": "",
+     "choices": 4
+    },
+    {
+     "id": "reflection",
+     "type": "text",
+     "unit": "",
+     "choices": 0
+    }
+   ],
+   "activityTitle": "Activity 2: Mission Control Kinematics"
+  },
+  {
+   "n": 3,
+   "title": "Motion in Two or Three Dimensions",
+   "tab": "M03 2D and 3D Motion",
+   "icon": "🎯",
+   "overview": "A golf ball on the Moon flies half a kilometre, the ISS accelerates toward Earth without ever speeding up, and every star is nudged toward the direction Earth is moving. All three follow from extending position, velocity and acceleration to vectors.",
+   "topics": [
+    "Position and Velocity Vectors",
+    "The Acceleration Vector",
+    "Projectile Motion",
+    "Motion in a Circle"
+   ],
+   "sections": [
+    [
+     "3.1",
+     "Position and Velocity Vectors"
+    ],
+    [
+     "3.2",
+     "The Acceleration Vector"
+    ],
+    [
+     "3.3",
+     "Projectile Motion"
+    ],
+    [
+     "3.4",
+     "Motion in a Circle"
+    ],
+    [
+     "3.5",
+     "Relative Velocity"
+    ]
+   ],
+   "items": [
+    {
+     "id": "q1",
+     "type": "numeric",
+     "unit": "m/s",
+     "choices": 0
+    },
+    {
+     "id": "q2",
+     "type": "mc",
+     "unit": "",
+     "choices": 4
+    },
+    {
+     "id": "q3",
+     "type": "numeric",
+     "unit": "m",
+     "choices": 0
+    },
+    {
+     "id": "q4",
+     "type": "numeric",
+     "unit": "m/s",
+     "choices": 0
+    },
+    {
+     "id": "q5",
+     "type": "mc",
+     "unit": "",
+     "choices": 4
+    },
+    {
+     "id": "q6",
+     "type": "numeric",
+     "unit": "m/s²",
+     "choices": 0
+    },
+    {
+     "id": "q7",
+     "type": "numeric",
+     "unit": "mm/s²",
+     "choices": 0
+    },
+    {
+     "id": "q8",
+     "type": "numeric",
+     "unit": "km/s",
+     "choices": 0
+    },
+    {
+     "id": "reflection",
+     "type": "text",
+     "unit": "",
+     "choices": 0
+    }
+   ],
+   "activityTitle": "Activity 3: Orbits, Arcs and Frames"
+  },
+  {
+   "n": 4,
+   "title": "Newton's Laws of Motion",
+   "tab": "M04 Newtons Laws",
+   "icon": "🍎",
+   "overview": "Why does Voyager 1 keep coasting outward at 17 km/s with no engine, and how can a rocket push itself through empty space? Newton's three laws, discovered while explaining the Moon's orbit, answer both and connect forces to motion.",
+   "topics": [
+    "Force and Interactions",
+    "Newton's First Law",
+    "Newton's Second Law",
+    "Mass and Weight"
+   ],
+   "sections": [
+    [
+     "4.1",
+     "Force and Interactions"
+    ],
+    [
+     "4.2",
+     "Newton's First Law"
+    ],
+    [
+     "4.3",
+     "Newton's Second Law"
+    ],
+    [
+     "4.4",
+     "Mass and Weight"
+    ],
+    [
+     "4.5",
+     "Newton's Third Law"
+    ],
+    [
+     "4.6",
+     "Free-Body Diagrams"
+    ]
+   ],
+   "items": [
+    {
+     "id": "q1",
+     "type": "numeric",
+     "unit": "N",
+     "choices": 0
+    },
+    {
+     "id": "q2",
+     "type": "mc",
+     "unit": "",
+     "choices": 4
+    },
+    {
+     "id": "q3",
+     "type": "numeric",
+     "unit": "m/s",
+     "choices": 0
+    },
+    {
+     "id": "q4",
+     "type": "numeric",
+     "unit": "m/s²",
+     "choices": 0
+    },
+    {
+     "id": "q5",
+     "type": "numeric",
+     "unit": "kg",
+     "choices": 0
+    },
+    {
+     "id": "q6",
+     "type": "numeric",
+     "unit": "m/s",
+     "choices": 0
+    },
+    {
+     "id": "q7",
+     "type": "numeric",
+     "unit": "m/s²",
+     "choices": 0
+    },
+    {
+     "id": "q8",
+     "type": "mc",
+     "unit": "",
+     "choices": 4
+    },
+    {
+     "id": "reflection",
+     "type": "text",
+     "unit": "",
+     "choices": 0
+    }
+   ],
+   "activityTitle": "Activity 4: Forces Across the Solar System"
+  },
+  {
+   "n": 5,
+   "title": "Applying Newton's Laws",
+   "tab": "M05 Applying Newtons Laws",
+   "icon": "🛰️",
+   "overview": "When the Curiosity rover was lowered onto Mars by a sky crane, every tension, thrust and drag force the engineers needed came from Newton's three laws. In this module you learn a systematic recipe for using those laws on rovers, landers, satellites and spinning space stations.",
+   "topics": [
+    "Using Newton's First Law: Particles in Equilibrium",
+    "Using Newton's Second Law: Dynamics of Particles",
+    "Friction Forces",
+    "Dynamics of Circular Motion"
+   ],
+   "sections": [
+    [
+     "5.1",
+     "Using Newton's First Law: Particles in Equilibrium"
+    ],
+    [
+     "5.2",
+     "Using Newton's Second Law: Dynamics of Particles"
+    ],
+    [
+     "5.3",
+     "Friction Forces"
+    ],
+    [
+     "5.4",
+     "Dynamics of Circular Motion"
+    ],
+    [
+     "5.5",
+     "The Fundamental Forces of Nature"
+    ]
+   ],
+   "items": [
+    {
+     "id": "q1",
+     "type": "numeric",
+     "unit": "N",
+     "choices": 0
+    },
+    {
+     "id": "q2",
+     "type": "numeric",
+     "unit": "N",
+     "choices": 0
+    },
+    {
+     "id": "q3",
+     "type": "numeric",
+     "unit": "m/s^2",
+     "choices": 0
+    },
+    {
+     "id": "q4",
+     "type": "mc",
+     "unit": "",
+     "choices": 4
+    },
+    {
+     "id": "q5",
+     "type": "numeric",
+     "unit": "m/s^2",
+     "choices": 0
+    },
+    {
+     "id": "q6",
+     "type": "numeric",
+     "unit": "m/s",
+     "choices": 0
+    },
+    {
+     "id": "q7",
+     "type": "numeric",
+     "unit": "s",
+     "choices": 0
+    },
+    {
+     "id": "q8",
+     "type": "mc",
+     "unit": "",
+     "choices": 4
+    },
+    {
+     "id": "reflection",
+     "type": "text",
+     "unit": "",
+     "choices": 0
+    }
+   ],
+   "activityTitle": "Activity 5: Forces on Other Worlds"
+  },
+  {
+   "n": 6,
+   "title": "Work and Kinetic Energy",
+   "tab": "M06 Work and Kinetic Energy",
+   "icon": "⚙️",
+   "overview": "In 2013 a 20 m asteroid exploded over Chelyabinsk with the energy of half a million tonnes of TNT, all of it stored in its motion. This module shows how forces change that energy of motion by doing work, giving you a shortcut to speeds without tracking accelerations moment by moment.",
+   "topics": [
+    "Work",
+    "Kinetic Energy and the Work-Energy Theorem",
+    "Work and Energy with Varying Forces",
+    "Power"
+   ],
+   "sections": [
+    [
+     "6.1",
+     "Work"
+    ],
+    [
+     "6.2",
+     "Kinetic Energy and the Work-Energy Theorem"
+    ],
+    [
+     "6.3",
+     "Work and Energy with Varying Forces"
+    ],
+    [
+     "6.4",
+     "Power"
+    ]
+   ],
+   "items": [
+    {
+     "id": "q1",
+     "type": "numeric",
+     "unit": "J",
+     "choices": 0
+    },
+    {
+     "id": "q2",
+     "type": "numeric",
+     "unit": "10^14 J",
+     "choices": 0
+    },
+    {
+     "id": "q3",
+     "type": "mc",
+     "unit": "",
+     "choices": 4
+    },
+    {
+     "id": "q4",
+     "type": "numeric",
+     "unit": "kN",
+     "choices": 0
+    },
+    {
+     "id": "q5",
+     "type": "numeric",
+     "unit": "N/m",
+     "choices": 0
+    },
+    {
+     "id": "q6",
+     "type": "numeric",
+     "unit": "10^9 J",
+     "choices": 0
+    },
+    {
+     "id": "q7",
+     "type": "numeric",
+     "unit": "W",
+     "choices": 0
+    },
+    {
+     "id": "q8",
+     "type": "mc",
+     "unit": "",
+     "choices": 4
+    },
+    {
+     "id": "reflection",
+     "type": "text",
+     "unit": "",
+     "choices": 0
+    }
+   ],
+   "activityTitle": "Activity 6: The Energy of Motion"
+  },
+  {
+   "n": 7,
+   "title": "Potential Energy and Energy Conservation",
+   "tab": "M07 Energy Conservation",
+   "icon": "🎢",
+   "overview": "Where does a falling rover's speed come from, and where does a satellite's orbital energy go when thin air drags on it? This module adds potential energy to kinetic energy and arrives at one of the most powerful laws in physics: energy is never created or destroyed.",
+   "topics": [
+    "Gravitational Potential Energy",
+    "Elastic Potential Energy",
+    "Conservative and Nonconservative Forces",
+    "Force and Potential Energy"
+   ],
+   "sections": [
+    [
+     "7.1",
+     "Gravitational Potential Energy"
+    ],
+    [
+     "7.2",
+     "Elastic Potential Energy"
+    ],
+    [
+     "7.3",
+     "Conservative and Nonconservative Forces"
+    ],
+    [
+     "7.4",
+     "Force and Potential Energy"
+    ],
+    [
+     "7.5",
+     "Energy Diagrams"
+    ]
+   ],
+   "items": [
+    {
+     "id": "q1",
+     "type": "numeric",
+     "unit": "m",
+     "choices": 0
+    },
+    {
+     "id": "q2",
+     "type": "numeric",
+     "unit": "m/s",
+     "choices": 0
+    },
+    {
+     "id": "q3",
+     "type": "numeric",
+     "unit": "m/s",
+     "choices": 0
+    },
+    {
+     "id": "q4",
+     "type": "numeric",
+     "unit": "cm",
+     "choices": 0
+    },
+    {
+     "id": "q5",
+     "type": "numeric",
+     "unit": "J",
+     "choices": 0
+    },
+    {
+     "id": "q6",
+     "type": "mc",
+     "unit": "",
+     "choices": 4
+    },
+    {
+     "id": "q7",
+     "type": "numeric",
+     "unit": "N",
+     "choices": 0
+    },
+    {
+     "id": "q8",
+     "type": "mc",
+     "unit": "",
+     "choices": 4
+    },
+    {
+     "id": "reflection",
+     "type": "text",
+     "unit": "",
+     "choices": 0
+    }
+   ],
+   "activityTitle": "Activity 7: Energy Bookkeeping in Space"
+  },
+  {
+   "n": 8,
+   "title": "Momentum, Impulse, and Collisions",
+   "tab": "M08 Momentum and Collisions",
+   "icon": "☄️",
+   "overview": "In 2022 a 580 kg spacecraft slammed into a small asteroid moon and measurably changed its orbit. Astronomers predicted the result without knowing the messy details of the impact, using one quantity that every interaction shares and conserves: momentum.",
+   "topics": [
+    "Momentum and Impulse",
+    "Conservation of Momentum",
+    "Momentum Conservation and Collisions",
+    "Elastic Collisions"
+   ],
+   "sections": [
+    [
+     "8.1",
+     "Momentum and Impulse"
+    ],
+    [
+     "8.2",
+     "Conservation of Momentum"
+    ],
+    [
+     "8.3",
+     "Momentum Conservation and Collisions"
+    ],
+    [
+     "8.4",
+     "Elastic Collisions"
+    ],
+    [
+     "8.5",
+     "Center of Mass"
+    ],
+    [
+     "8.6",
+     "Rocket Propulsion"
+    ]
+   ],
+   "items": [
+    {
+     "id": "q1",
+     "type": "numeric",
+     "unit": "N",
+     "choices": 0
+    },
+    {
+     "id": "q2",
+     "type": "mc",
+     "unit": "",
+     "choices": 4
+    },
+    {
+     "id": "q3",
+     "type": "numeric",
+     "unit": "mm/s",
+     "choices": 0
+    },
+    {
+     "id": "q4",
+     "type": "numeric",
+     "unit": "",
+     "choices": 0
+    },
+    {
+     "id": "q5",
+     "type": "numeric",
+     "unit": "km/s",
+     "choices": 0
+    },
+    {
+     "id": "q6",
+     "type": "numeric",
+     "unit": "km",
+     "choices": 0
+    },
+    {
+     "id": "q7",
+     "type": "mc",
+     "unit": "",
+     "choices": 4
+    },
+    {
+     "id": "q8",
+     "type": "numeric",
+     "unit": "kg",
+     "choices": 0
+    },
+    {
+     "id": "reflection",
+     "type": "text",
+     "unit": "",
+     "choices": 0
+    }
+   ],
+   "activityTitle": "Activity 8: Mission Control for Momentum"
+  },
+  {
+   "n": 9,
+   "title": "Rotation of Rigid Bodies",
+   "tab": "M09 Rigid-Body Rotation",
+   "icon": "🌀",
+   "overview": "Pulsars spin hundreds of times per second, Earth once a day, and a space telescope's reaction wheels thousands of times a minute. This module gives you the language of rotation and shows how a single number, the moment of inertia, lets astronomers weigh up the insides of planets they can never visit.",
+   "topics": [
+    "Angular Velocity and Acceleration",
+    "Rotation with Constant Angular Acceleration",
+    "Relating Linear and Angular Kinematics",
+    "Energy in Rotational Motion"
+   ],
+   "sections": [
+    [
+     "9.1",
+     "Angular Velocity and Acceleration"
+    ],
+    [
+     "9.2",
+     "Rotation with Constant Angular Acceleration"
+    ],
+    [
+     "9.3",
+     "Relating Linear and Angular Kinematics"
+    ],
+    [
+     "9.4",
+     "Energy in Rotational Motion"
+    ],
+    [
+     "9.5",
+     "Parallel-Axis Theorem"
+    ],
+    [
+     "9.6",
+     "Moment-of-Inertia Calculations"
+    ]
+   ],
+   "items": [
+    {
+     "id": "q1",
+     "type": "numeric",
+     "unit": "10^-5 rad/s",
+     "choices": 0
+    },
+    {
+     "id": "q2",
+     "type": "numeric",
+     "unit": "rev",
+     "choices": 0
+    },
+    {
+     "id": "q3",
+     "type": "numeric",
+     "unit": "s",
+     "choices": 0
+    },
+    {
+     "id": "q4",
+     "type": "numeric",
+     "unit": "m/s",
+     "choices": 0
+    },
+    {
+     "id": "q5",
+     "type": "mc",
+     "unit": "",
+     "choices": 4
+    },
+    {
+     "id": "q6",
+     "type": "numeric",
+     "unit": "10^27 J",
+     "choices": 0
+    },
+    {
+     "id": "q7",
+     "type": "numeric",
+     "unit": "kg·m^2",
+     "choices": 0
+    },
+    {
+     "id": "q8",
+     "type": "mc",
+     "unit": "",
+     "choices": 4
+    },
+    {
+     "id": "reflection",
+     "type": "text",
+     "unit": "",
+     "choices": 0
+    }
+   ],
+   "activityTitle": "Activity 9: Spin Doctors"
+  },
+  {
+   "n": 10,
+   "title": "Dynamics of Rotational Motion",
+   "tab": "M10 Rotational Dynamics",
+   "icon": "🪀",
+   "overview": "How does a lazily turning stellar core end up as a pulsar spinning 30 times a second, and why does it then slowly spin down? This module explains why rotation changes, using torque and angular momentum, the rotational partners of force and linear momentum.",
+   "topics": [
+    "Torque",
+    "Torque and Angular Acceleration for a Rigid Body",
+    "Rigid-Body Rotation About a Moving Axis",
+    "Work and Power in Rotational Motion"
+   ],
+   "sections": [
+    [
+     "10.1",
+     "Torque"
+    ],
+    [
+     "10.2",
+     "Torque and Angular Acceleration for a Rigid Body"
+    ],
+    [
+     "10.3",
+     "Rigid-Body Rotation About a Moving Axis"
+    ],
+    [
+     "10.4",
+     "Work and Power in Rotational Motion"
+    ],
+    [
+     "10.5",
+     "Angular Momentum"
+    ],
+    [
+     "10.6",
+     "Conservation of Angular Momentum"
+    ],
+    [
+     "10.7",
+     "Gyroscopes and Precession"
+    ]
+   ],
+   "items": [
+    {
+     "id": "q1",
+     "type": "numeric",
+     "unit": "N·m",
+     "choices": 0
+    },
+    {
+     "id": "q2",
+     "type": "numeric",
+     "unit": "s",
+     "choices": 0
+    },
+    {
+     "id": "q3",
+     "type": "numeric",
+     "unit": "m/s^2",
+     "choices": 0
+    },
+    {
+     "id": "q4",
+     "type": "numeric",
+     "unit": "m/s",
+     "choices": 0
+    },
+    {
+     "id": "q5",
+     "type": "mc",
+     "unit": "",
+     "choices": 4
+    },
+    {
+     "id": "q6",
+     "type": "numeric",
+     "unit": "J",
+     "choices": 0
+    },
+    {
+     "id": "q7",
+     "type": "numeric",
+     "unit": "s",
+     "choices": 0
+    },
+    {
+     "id": "q8",
+     "type": "mc",
+     "unit": "",
+     "choices": 4
+    },
+    {
+     "id": "reflection",
+     "type": "text",
+     "unit": "",
+     "choices": 0
+    }
+   ],
+   "activityTitle": "Activity 10: Torque Around the Solar System"
+  },
+  {
+   "n": 11,
+   "title": "Equilibrium and Elasticity",
+   "tab": "M11 Equilibrium and Elasticity",
+   "icon": "⚖️",
+   "overview": "A telescope tracking a faint galaxy must hold perfectly still: every force and every torque on it has to cancel. In this module you learn the two conditions for equilibrium, and then find out how real materials stretch, squeeze and shear under load, from crane cables lifting satellites to the mountains of Mars.",
+   "topics": [
+    "Conditions for Equilibrium",
+    "Center of Gravity",
+    "Solving Rigid-Body Equilibrium Problems",
+    "Stress, Strain, and Elastic Moduli"
+   ],
+   "sections": [
+    [
+     "11.1",
+     "Conditions for Equilibrium"
+    ],
+    [
+     "11.2",
+     "Center of Gravity"
+    ],
+    [
+     "11.3",
+     "Solving Rigid-Body Equilibrium Problems"
+    ],
+    [
+     "11.4",
+     "Stress, Strain, and Elastic Moduli"
+    ],
+    [
+     "11.5",
+     "Elasticity and Plasticity"
+    ]
+   ],
+   "items": [
+    {
+     "id": "q1",
+     "type": "numeric",
+     "unit": "m",
+     "choices": 0
+    },
+    {
+     "id": "q2",
+     "type": "numeric",
+     "unit": "N",
+     "choices": 0
+    },
+    {
+     "id": "q3",
+     "type": "numeric",
+     "unit": "N",
+     "choices": 0
+    },
+    {
+     "id": "q4",
+     "type": "numeric",
+     "unit": "degrees",
+     "choices": 0
+    },
+    {
+     "id": "q5",
+     "type": "numeric",
+     "unit": "mm",
+     "choices": 0
+    },
+    {
+     "id": "q6",
+     "type": "numeric",
+     "unit": "km",
+     "choices": 0
+    },
+    {
+     "id": "q7",
+     "type": "mc",
+     "unit": "",
+     "choices": 4
+    },
+    {
+     "id": "q8",
+     "type": "mc",
+     "unit": "",
+     "choices": 4
+    },
+    {
+     "id": "reflection",
+     "type": "text",
+     "unit": "",
+     "choices": 0
+    }
+   ],
+   "activityTitle": "Activity 11: Keeping the Observatory Steady"
+  },
+  {
+   "n": 12,
+   "title": "Fluid Mechanics",
+   "tab": "M12 Fluid Mechanics",
+   "icon": "🌊",
+   "overview": "Planetary atmospheres, hidden oceans, the solar wind and the gas inside stars are all fluids. In this module you learn the few ideas (density, pressure, buoyancy, continuity, Bernoulli's equation and viscosity) that let us weigh Titan's air, decide whether Saturn would float, and understand why planet-forming disks must be turbulent.",
+   "topics": [
+    "Gases, Liquids, and Density",
+    "Pressure in a Fluid and Hydrostatic Equilibrium",
+    "Buoyancy",
+    "Fluid Flow"
+   ],
+   "sections": [
+    [
+     "12.1",
+     "Gases, Liquids, and Density"
+    ],
+    [
+     "12.2",
+     "Pressure in a Fluid and Hydrostatic Equilibrium"
+    ],
+    [
+     "12.3",
+     "Buoyancy"
+    ],
+    [
+     "12.4",
+     "Fluid Flow"
+    ],
+    [
+     "12.5",
+     "Bernoulli's Equation"
+    ],
+    [
+     "12.6",
+     "Viscosity and Turbulence"
+    ]
+   ],
+   "items": [
+    {
+     "id": "q1",
+     "type": "numeric",
+     "unit": "kg/m^3",
+     "choices": 0
+    },
+    {
+     "id": "q2",
+     "type": "numeric",
+     "unit": "MPa",
+     "choices": 0
+    },
+    {
+     "id": "q3",
+     "type": "numeric",
+     "unit": "km",
+     "choices": 0
+    },
+    {
+     "id": "q4",
+     "type": "numeric",
+     "unit": "",
+     "choices": 0
+    },
+    {
+     "id": "q5",
+     "type": "numeric",
+     "unit": "m/s",
+     "choices": 0
+    },
+    {
+     "id": "q6",
+     "type": "numeric",
+     "unit": "m/s",
+     "choices": 0
+    },
+    {
+     "id": "q7",
+     "type": "mc",
+     "unit": "",
+     "choices": 4
+    },
+    {
+     "id": "q8",
+     "type": "mc",
+     "unit": "",
+     "choices": 4
+    },
+    {
+     "id": "reflection",
+     "type": "text",
+     "unit": "",
+     "choices": 0
+    }
+   ],
+   "activityTitle": "Activity 12: Oceans, Air and Wind Across the Solar System"
+  },
+  {
+   "n": 13,
+   "title": "Gravitation",
+   "tab": "M13 Gravitation",
+   "icon": "🪐",
+   "overview": "From nothing more than the size and period of Io's orbit we can weigh Jupiter, and from a star racing around the center of our galaxy we can weigh a black hole. In this module you see how one simple law, Newton's law of gravitation, explains weight on other worlds, escape speed, satellite orbits, Kepler's laws and black holes.",
+   "topics": [
+    "Newton's Law of Gravitation",
+    "Weight",
+    "Gravitational Potential Energy",
+    "The Motion of Satellites"
+   ],
+   "sections": [
+    [
+     "13.1",
+     "Newton's Law of Gravitation"
+    ],
+    [
+     "13.2",
+     "Weight"
+    ],
+    [
+     "13.3",
+     "Gravitational Potential Energy"
+    ],
+    [
+     "13.4",
+     "The Motion of Satellites"
+    ],
+    [
+     "13.5",
+     "Kepler's Laws and the Motion of Planets"
+    ],
+    [
+     "13.6",
+     "Spherical Mass Distributions"
+    ],
+    [
+     "13.7",
+     "Apparent Weight and the Earth's Rotation"
+    ],
+    [
+     "13.8",
+     "Black Holes"
+    ]
+   ],
+   "items": [
+    {
+     "id": "q1",
+     "type": "numeric",
+     "unit": "m/s^2",
+     "choices": 0
+    },
+    {
+     "id": "q2",
+     "type": "numeric",
+     "unit": "km/s",
+     "choices": 0
+    },
+    {
+     "id": "q3",
+     "type": "numeric",
+     "unit": "min",
+     "choices": 0
+    },
+    {
+     "id": "q4",
+     "type": "numeric",
+     "unit": "10^26 kg",
+     "choices": 0
+    },
+    {
+     "id": "q5",
+     "type": "numeric",
+     "unit": "yr",
+     "choices": 0
+    },
+    {
+     "id": "q6",
+     "type": "numeric",
+     "unit": "km",
+     "choices": 0
+    },
+    {
+     "id": "q7",
+     "type": "mc",
+     "unit": "",
+     "choices": 4
+    },
+    {
+     "id": "q8",
+     "type": "mc",
+     "unit": "",
+     "choices": 4
+    },
+    {
+     "id": "reflection",
+     "type": "text",
+     "unit": "",
+     "choices": 0
+    }
+   ],
+   "activityTitle": "Activity 13: Weighing Worlds"
+  },
+  {
+   "n": 14,
+   "title": "Periodic Motion",
+   "tab": "M14 Periodic Motion",
+   "icon": "🕰️",
+   "overview": "Pulsating Cepheids, flashing pulsars, Jupiter's moons sliding back and forth, a seismometer on Mars ringing after a marsquake: the universe is full of motion that repeats. In this module you learn the physics of oscillation, from simple harmonic motion and pendulums to damping, resonance and the orbital resonances that carve gaps in the asteroid belt.",
+   "topics": [
+    "Describing Oscillations",
+    "Simple Harmonic Motion",
+    "Energy in Simple Harmonic Motion",
+    "Applications of Simple Harmonic Motion"
+   ],
+   "sections": [
+    [
+     "14.1",
+     "Describing Oscillations"
+    ],
+    [
+     "14.2",
+     "Simple Harmonic Motion"
+    ],
+    [
+     "14.3",
+     "Energy in Simple Harmonic Motion"
+    ],
+    [
+     "14.4",
+     "Applications of Simple Harmonic Motion"
+    ],
+    [
+     "14.5",
+     "The Simple Pendulum"
+    ],
+    [
+     "14.6",
+     "The Physical Pendulum"
+    ],
+    [
+     "14.7",
+     "Damped Oscillations"
+    ],
+    [
+     "14.8",
+     "Forced Oscillations and Resonance"
+    ]
+   ],
+   "items": [
+    {
+     "id": "q1",
+     "type": "numeric",
+     "unit": "rad/s",
+     "choices": 0
+    },
+    {
+     "id": "q2",
+     "type": "numeric",
+     "unit": "kg",
+     "choices": 0
+    },
+    {
+     "id": "q3",
+     "type": "numeric",
+     "unit": "km/s",
+     "choices": 0
+    },
+    {
+     "id": "q4",
+     "type": "numeric",
+     "unit": "s",
+     "choices": 0
+    },
+    {
+     "id": "q5",
+     "type": "numeric",
+     "unit": "min",
+     "choices": 0
+    },
+    {
+     "id": "q6",
+     "type": "numeric",
+     "unit": "AU",
+     "choices": 0
+    },
+    {
+     "id": "q7",
+     "type": "mc",
+     "unit": "",
+     "choices": 4
+    },
+    {
+     "id": "q8",
+     "type": "mc",
+     "unit": "",
+     "choices": 4
+    },
+    {
+     "id": "reflection",
+     "type": "text",
+     "unit": "",
+     "choices": 0
+    }
+   ],
+   "activityTitle": "Activity 14: Rhythms of the Cosmos"
+  }
+ ]
+}

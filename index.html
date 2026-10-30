@@ -3,15 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="PHYMECH online modules: 14 self-paced modules with discussion, worked examples and graded activities.">
-<meta name="author" content="Ryan M. Vitalez">
 <title>PHYMECH · Mechanics · Rizal Technological University</title>
+<meta name="description" content="PHYMECH online modules. Sign in with your @rtu.edu.ph Google account.">
 <link rel="stylesheet" href="assets/style.css">
-<script>
-window.MathJax = { tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
-                   options: { skipHtmlTags: ['script','noscript','style','textarea','pre','code'] } };
-</script>
-<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-chtml.js"></script>
+<script src="assets/config.js"></script>
 </head>
 <body class="landing">
 <div class="banner">🔭 <b>PHYMECH · Mechanics</b> &nbsp;—&nbsp; a class of <b>Instr. Ryan M. Vitalez, LPT</b><span>&nbsp;·&nbsp; Rizal Technological University</span></div>
@@ -20,132 +15,23 @@ window.MathJax = { tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\
 <div class="txt">
 <span class="eyebrow">🔭 Rizal Technological University · Department of Earth and Space Sciences</span>
 <h1><small>PHYMECH · Bachelor of Science in Astronomy</small>Mechanics</h1>
-<p>Self-paced online modules for the days we cannot meet in class. Each module follows one chapter of the course book
-and has three parts: a short discussion, worked examples, and a graded activity that goes straight to your instructor.</p>
-<div class="hchips"><span>📚 14 modules</span><span>🧮 42 worked examples</span><span>✍️ 112 activity items</span><span>🪐 Mechanics with the sky as our lab</span></div>
-<dl class="facts">
-<div><dt>Instructor</dt><dd>Instr. Ryan M. Vitalez, LPT</dd></div>
-<div><dt>Program</dt><dd>Bachelor of Science in Astronomy, 1st year</dd></div>
-<div><dt>Course book</dt><dd>Mechanics</dd></div>
-<div><dt>Submissions</dt><dd>Up to 2 attempts per activity</dd></div>
-</dl>
+<p id="msg">Opening the course site… The modules are for RTU students only: you will be asked to use your
+<b>@rtu.edu.ph</b> Google account if you are not signed in yet.</p>
+<div class="hchips"><a class="cta" id="go" href="#">🎓 Open the PHYMECH modules</a><span>🔒 RTU accounts only</span></div>
 </div></div></header>
-
-<div class="wrap">
-<h2 class="section">How each module works</h2>
-<div class="twocol">
-<div class="panel"><h3>📖 Discussion and examples</h3><ul>
-<li><b>Discussion.</b> A short, focused review of each section of the chapter, with key equations and figures.</li>
-<li><b>Worked examples.</b> Three solved problems. Try each one before opening the solution.</li></ul></div>
-<div class="panel"><h3>✍️ Activity</h3><ul>
-<li><b>Your details.</b> Last, first and middle name, student number, and block and section.</li>
-<li><b>Solutions.</b> Write your work with the symbol and LaTeX toolbar, then enter your final answer.</li>
-<li><b>Instant feedback.</b> See your score and which items are correct or wrong as soon as you submit.</li></ul></div>
-</div>
-<h2 class="section">Part I · Describing Motion</h2><p class="sub"><b>Modules 1-3.</b> Vectors and the kinematics of rovers, spacecraft and crater ejecta in one, two and three dimensions.</p><div class="grid"><article class="chapter">
-<div class="cnum">🧭 <span>Module 1</span></div>
-<h3>Vectors</h3>
-<p>Pointing a telescope or steering a spacecraft needs more than “how much”: it needs “which way”. This module gives you the language of vectors that the rest of mechanics is written in.</p>
-<ul class="topics"><li>Vectors and Scalars, Intuitively</li><li>Components of a Vector</li><li>Unit Vectors</li><li>Addition, Subtraction, and Products of Vectors</li></ul>
-<div class="clinks"><a class="cl amber" href="modules/module-01.html">📖 Lesson</a>
-<a class="cl ghost" href="modules/module-01.html#activity">✍️ Activity · 8 items</a></div>
-</article><article class="chapter">
-<div class="cnum">📏 <span>Module 2</span></div>
-<h3>Motion along a Straight Line</h3>
-<p>From a Mars rover inching toward a rock to a rocket roaring off its pad, straight-line motion is where kinematics begins. Here you learn to describe position, velocity and acceleration precisely, and to predict motion when the acceleration is constant or changes with time.</p>
-<ul class="topics"><li>Displacement, Time, and Average Velocity</li><li>Instantaneous Velocity</li><li>Average and Instantaneous Acceleration</li><li>Motion with Constant Acceleration</li></ul>
-<div class="clinks"><a class="cl amber" href="modules/module-02.html">📖 Lesson</a>
-<a class="cl ghost" href="modules/module-02.html#activity">✍️ Activity · 8 items</a></div>
-</article><article class="chapter">
-<div class="cnum">🎯 <span>Module 3</span></div>
-<h3>Motion in Two or Three Dimensions</h3>
-<p>A golf ball on the Moon flies half a kilometre, the ISS accelerates toward Earth without ever speeding up, and every star is nudged toward the direction Earth is moving. All three follow from extending position, velocity and acceleration to vectors.</p>
-<ul class="topics"><li>Position and Velocity Vectors</li><li>The Acceleration Vector</li><li>Projectile Motion</li><li>Motion in a Circle</li></ul>
-<div class="clinks"><a class="cl amber" href="modules/module-03.html">📖 Lesson</a>
-<a class="cl ghost" href="modules/module-03.html#activity">✍️ Activity · 8 items</a></div>
-</article></div><h2 class="section">Part II · Forces and Newton&#x27;s Laws</h2><p class="sub"><b>Modules 4-5.</b> Why things move: forces, free-body diagrams, friction, and circular motion of moons and satellites.</p><div class="grid"><article class="chapter">
-<div class="cnum">🍎 <span>Module 4</span></div>
-<h3>Newton&#x27;s Laws of Motion</h3>
-<p>Why does Voyager 1 keep coasting outward at 17 km/s with no engine, and how can a rocket push itself through empty space? Newton's three laws, discovered while explaining the Moon's orbit, answer both and connect forces to motion.</p>
-<ul class="topics"><li>Force and Interactions</li><li>Newton&#x27;s First Law</li><li>Newton&#x27;s Second Law</li><li>Mass and Weight</li></ul>
-<div class="clinks"><a class="cl amber" href="modules/module-04.html">📖 Lesson</a>
-<a class="cl ghost" href="modules/module-04.html#activity">✍️ Activity · 8 items</a></div>
-</article><article class="chapter">
-<div class="cnum">🛰️ <span>Module 5</span></div>
-<h3>Applying Newton&#x27;s Laws</h3>
-<p>When the Curiosity rover was lowered onto Mars by a sky crane, every tension, thrust and drag force the engineers needed came from Newton's three laws. In this module you learn a systematic recipe for using those laws on rovers, landers, satellites and spinning space stations.</p>
-<ul class="topics"><li>Using Newton&#x27;s First Law: Particles in Equilibrium</li><li>Using Newton&#x27;s Second Law: Dynamics of Particles</li><li>Friction Forces</li><li>Dynamics of Circular Motion</li></ul>
-<div class="clinks"><a class="cl amber" href="modules/module-05.html">📖 Lesson</a>
-<a class="cl ghost" href="modules/module-05.html#activity">✍️ Activity · 8 items</a></div>
-</article></div><h2 class="section">Part III · Energy and Momentum</h2><p class="sub"><b>Modules 6-8.</b> Work, energy conservation, collisions and rockets: the bookkeeping of every orbital maneuver.</p><div class="grid"><article class="chapter">
-<div class="cnum">⚙️ <span>Module 6</span></div>
-<h3>Work and Kinetic Energy</h3>
-<p>In 2013 a 20 m asteroid exploded over Chelyabinsk with the energy of half a million tonnes of TNT, all of it stored in its motion. This module shows how forces change that energy of motion by doing work, giving you a shortcut to speeds without tracking accelerations moment by moment.</p>
-<ul class="topics"><li>Work</li><li>Kinetic Energy and the Work-Energy Theorem</li><li>Work and Energy with Varying Forces</li><li>Power</li></ul>
-<div class="clinks"><a class="cl amber" href="modules/module-06.html">📖 Lesson</a>
-<a class="cl ghost" href="modules/module-06.html#activity">✍️ Activity · 8 items</a></div>
-</article><article class="chapter">
-<div class="cnum">🎢 <span>Module 7</span></div>
-<h3>Potential Energy and Energy Conservation</h3>
-<p>Where does a falling rover's speed come from, and where does a satellite's orbital energy go when thin air drags on it? This module adds potential energy to kinetic energy and arrives at one of the most powerful laws in physics: energy is never created or destroyed.</p>
-<ul class="topics"><li>Gravitational Potential Energy</li><li>Elastic Potential Energy</li><li>Conservative and Nonconservative Forces</li><li>Force and Potential Energy</li></ul>
-<div class="clinks"><a class="cl amber" href="modules/module-07.html">📖 Lesson</a>
-<a class="cl ghost" href="modules/module-07.html#activity">✍️ Activity · 8 items</a></div>
-</article><article class="chapter">
-<div class="cnum">☄️ <span>Module 8</span></div>
-<h3>Momentum, Impulse, and Collisions</h3>
-<p>In 2022 a 580 kg spacecraft slammed into a small asteroid moon and measurably changed its orbit. Astronomers predicted the result without knowing the messy details of the impact, using one quantity that every interaction shares and conserves: momentum.</p>
-<ul class="topics"><li>Momentum and Impulse</li><li>Conservation of Momentum</li><li>Momentum Conservation and Collisions</li><li>Elastic Collisions</li></ul>
-<div class="clinks"><a class="cl amber" href="modules/module-08.html">📖 Lesson</a>
-<a class="cl ghost" href="modules/module-08.html#activity">✍️ Activity · 8 items</a></div>
-</article></div><h2 class="section">Part IV · Rotation and Equilibrium</h2><p class="sub"><b>Modules 9-11.</b> Spinning planets and pulsars, torque, angular momentum, and the strength of rock and ice.</p><div class="grid"><article class="chapter">
-<div class="cnum">🌀 <span>Module 9</span></div>
-<h3>Rotation of Rigid Bodies</h3>
-<p>Pulsars spin hundreds of times per second, Earth once a day, and a space telescope's reaction wheels thousands of times a minute. This module gives you the language of rotation and shows how a single number, the moment of inertia, lets astronomers weigh up the insides of planets they can never visit.</p>
-<ul class="topics"><li>Angular Velocity and Acceleration</li><li>Rotation with Constant Angular Acceleration</li><li>Relating Linear and Angular Kinematics</li><li>Energy in Rotational Motion</li></ul>
-<div class="clinks"><a class="cl amber" href="modules/module-09.html">📖 Lesson</a>
-<a class="cl ghost" href="modules/module-09.html#activity">✍️ Activity · 8 items</a></div>
-</article><article class="chapter">
-<div class="cnum">🪀 <span>Module 10</span></div>
-<h3>Dynamics of Rotational Motion</h3>
-<p>How does a lazily turning stellar core end up as a pulsar spinning 30 times a second, and why does it then slowly spin down? This module explains why rotation changes, using torque and angular momentum, the rotational partners of force and linear momentum.</p>
-<ul class="topics"><li>Torque</li><li>Torque and Angular Acceleration for a Rigid Body</li><li>Rigid-Body Rotation About a Moving Axis</li><li>Work and Power in Rotational Motion</li></ul>
-<div class="clinks"><a class="cl amber" href="modules/module-10.html">📖 Lesson</a>
-<a class="cl ghost" href="modules/module-10.html#activity">✍️ Activity · 8 items</a></div>
-</article><article class="chapter">
-<div class="cnum">⚖️ <span>Module 11</span></div>
-<h3>Equilibrium and Elasticity</h3>
-<p>A telescope tracking a faint galaxy must hold perfectly still: every force and every torque on it has to cancel. In this module you learn the two conditions for equilibrium, and then find out how real materials stretch, squeeze and shear under load, from crane cables lifting satellites to the mountains of Mars.</p>
-<ul class="topics"><li>Conditions for Equilibrium</li><li>Center of Gravity</li><li>Solving Rigid-Body Equilibrium Problems</li><li>Stress, Strain, and Elastic Moduli</li></ul>
-<div class="clinks"><a class="cl amber" href="modules/module-11.html">📖 Lesson</a>
-<a class="cl ghost" href="modules/module-11.html#activity">✍️ Activity · 8 items</a></div>
-</article></div><h2 class="section">Part V · Fluids, Gravitation and Oscillations</h2><p class="sub"><b>Modules 12-14.</b> Atmospheres and oceans, Newton&#x27;s gravitation and Kepler&#x27;s laws, and periodic motion.</p><div class="grid"><article class="chapter">
-<div class="cnum">🌊 <span>Module 12</span></div>
-<h3>Fluid Mechanics</h3>
-<p>Planetary atmospheres, hidden oceans, the solar wind and the gas inside stars are all fluids. In this module you learn the few ideas (density, pressure, buoyancy, continuity, Bernoulli's equation and viscosity) that let us weigh Titan's air, decide whether Saturn would float, and understand why planet-forming disks must be turbulent.</p>
-<ul class="topics"><li>Gases, Liquids, and Density</li><li>Pressure in a Fluid and Hydrostatic Equilibrium</li><li>Buoyancy</li><li>Fluid Flow</li></ul>
-<div class="clinks"><a class="cl amber" href="modules/module-12.html">📖 Lesson</a>
-<a class="cl ghost" href="modules/module-12.html#activity">✍️ Activity · 8 items</a></div>
-</article><article class="chapter">
-<div class="cnum">🪐 <span>Module 13</span></div>
-<h3>Gravitation</h3>
-<p>From nothing more than the size and period of Io's orbit we can weigh Jupiter, and from a star racing around the center of our galaxy we can weigh a black hole. In this module you see how one simple law, Newton's law of gravitation, explains weight on other worlds, escape speed, satellite orbits, Kepler's laws and black holes.</p>
-<ul class="topics"><li>Newton&#x27;s Law of Gravitation</li><li>Weight</li><li>Gravitational Potential Energy</li><li>The Motion of Satellites</li></ul>
-<div class="clinks"><a class="cl amber" href="modules/module-13.html">📖 Lesson</a>
-<a class="cl ghost" href="modules/module-13.html#activity">✍️ Activity · 8 items</a></div>
-</article><article class="chapter">
-<div class="cnum">🕰️ <span>Module 14</span></div>
-<h3>Periodic Motion</h3>
-<p>Pulsating Cepheids, flashing pulsars, Jupiter's moons sliding back and forth, a seismometer on Mars ringing after a marsquake: the universe is full of motion that repeats. In this module you learn the physics of oscillation, from simple harmonic motion and pendulums to damping, resonance and the orbital resonances that carve gaps in the asteroid belt.</p>
-<ul class="topics"><li>Describing Oscillations</li><li>Simple Harmonic Motion</li><li>Energy in Simple Harmonic Motion</li><li>Applications of Simple Harmonic Motion</li></ul>
-<div class="clinks"><a class="cl amber" href="modules/module-14.html">📖 Lesson</a>
-<a class="cl ghost" href="modules/module-14.html#activity">✍️ Activity · 8 items</a></div>
-</article></div>
-</div>
-<footer class="site-foot"><div class="in">
-<p><b>PHYMECH · Mechanics</b>. Bachelor of Science in Astronomy, Department of Earth and Space Sciences, Rizal Technological University.
-Online modules by <b>Instr. Ryan M. Vitalez, LPT</b>.</p>
-<p><a href="index.html">Course home</a></p>
-</div></footer>
+<script>
+(function () {
+  var base = window.PHYMECH_STUDENT_URL || "";
+  var go = document.getElementById("go");
+  if (!base) {
+    document.getElementById("msg").textContent = "The course site is being set up. Please check back soon.";
+    go.style.display = "none";
+    return;
+  }
+  var url = base + "";
+  go.href = url;
+  location.replace(url);
+})();
+</script>
 </body>
 </html>

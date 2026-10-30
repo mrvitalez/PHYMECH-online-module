@@ -1,4 +1,4 @@
 // ===== Instructor setting =====
-// Paste the Web app URL of the Google Apps Script (see INSTRUCTOR-SETUP.md) between the quotes.
-// While it is empty, students can still answer the activity but cannot submit it.
-window.PHYMECH_SUBMIT_URL = "";
+// Paste the Web app URL of the PHYMECH student site (Apps Script deployment) between the quotes.
+// Every page of this GitHub site sends students there. See INSTRUCTOR-SETUP.md.
+window.PHYMECH_STUDENT_URL = "";
