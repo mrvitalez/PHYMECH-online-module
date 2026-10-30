@@ -14,7 +14,7 @@ Students never see this page.</p>
 </main>
 <div class="toast" id="toast" hidden></div>
 
-<script>window.BOOT = /*BOOT*/null;</script>
+<script>window.BOOT = <?!= boot ?>;</script>
 <script>
 window.MathJax = { tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
                    options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] },
@@ -467,7 +467,12 @@ window.MathJax = { tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\
     };
   }
 
-  call("admin_load").then(function (d) { A = d; setStudentLink(A.studentUrl); render(); })
+  call("admin_load").then(function (d) {
+    A = d;
+    setStudentLink(A.studentUrl);
+    document.getElementById("who").textContent = "Signed in as " + (A.email || BOOT.email || "");
+    render();
+  })
     .catch(function (e) { view.innerHTML = '<section class="ch"><h2>Could not load</h2><p>' + esc(e.message) + "</p></section>"; });
 })();
 </script>

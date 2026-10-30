@@ -4,7 +4,7 @@
 <div id="app"><div class="loading"><div class="spinner"></div>Loading…</div></div>
 <button class="backtop" id="backtop" type="button" aria-label="Back to top">↑</button>
 
-<script>window.BOOT = /*BOOT*/null;</script>
+<script>window.BOOT = <?!= boot ?>;</script>
 <script>
 window.MathJax = { tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
                    options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] },
@@ -609,12 +609,23 @@ window.MathJax = { tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\
     if (BOOT.error) return fail(BOOT.error);
     D = BOOT.data;
     if (!D) {
+      // Started without page data: read the module number from the address bar instead.
+      if (!BOOT.module && window.google && google.script && google.script.url) {
+        google.script.url.getLocation(function (loc) {
+          var m = loc && loc.parameter && loc.parameter.module;
+          navigate(m ? Number(m) : 0, loc && loc.hash ? "#" + loc.hash : "", false);
+        });
+        return;
+      }
       navigate(BOOT.module || 0, location.hash, false);
       return;
     }
     route();
   }
   function route() {
+    // The server also sends the email and site address with every view, in case the page started without them.
+    if (D.email) BOOT.email = D.email;
+    if (D.url) BOOT.url = D.url;
     if (D.view === "module") renderModule(D); else renderHome(D);
   }
   start();

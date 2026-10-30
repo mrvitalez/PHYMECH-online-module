@@ -80,8 +80,11 @@ function doGet(e) {
 
 function app_(file, title, boot) {
   var json = JSON.stringify(boot).replace(/</g, '\\u003c').replace(/\u2028/g, '\\u2028').replace(/\u2029/g, '\\u2029');
-  var html = HtmlService.createHtmlOutputFromFile('Styles').getContent() +
-    HtmlService.createHtmlOutputFromFile(file).getContent().replace('/*BOOT*/null', json);
+  // Pass the page data with a template scriptlet (<?!= boot ?> in the HTML file). Google may rewrite
+  // comments in plain HTML files, so a text placeholder is not reliable there.
+  var page = HtmlService.createTemplateFromFile(file);
+  page.boot = json;
+  var html = HtmlService.createHtmlOutputFromFile('Styles').getContent() + page.evaluate().getContent();
   return HtmlService.createHtmlOutput(html).setTitle(title)
     .setFaviconUrl(file === 'Admin' ? CONFIG.ICON_ADMIN : CONFIG.ICON_STUDENT)
     .addMetaTag('viewport', 'width=device-width, initial-scale=1');
@@ -113,7 +116,7 @@ function api_home() {
     return { n: m.n, title: m.title, icon: m.icon, overview: m.overview, topics: m.topics, state: st,
              attempts: pr.attempts, best: pr.best, total: pr.total, video: !!(rows[m.n] && rows[m.n].videoId) };
   });
-  return { view: 'home', manifest: { parts: man.parts, course: man.course, courseTitle: man.courseTitle,
+  return { view: 'home', email: email, url: appUrl_(), manifest: { parts: man.parts, course: man.course, courseTitle: man.courseTitle,
            instructor: man.instructor, university: man.university, department: man.department,
            program: man.program, logo: man.logo },
            semester: semesterInfo_(s, today), modules: mods, profile: profile_(email),
@@ -129,7 +132,7 @@ function api_module(n) {
   var m = findModule_(man, n);
   var row = moduleRows_()[n];
   var st = moduleState_(row, s, today);
-  var out = { view: 'module', module: { n: n, title: m.title, icon: m.icon, overview: m.overview,
+  var out = { view: 'module', email: email, url: appUrl_(), module: { n: n, title: m.title, icon: m.icon, overview: m.overview,
               activityTitle: m.activityTitle, sections: m.sections },
               manifest: { logo: man.logo, course: man.course, courseTitle: man.courseTitle,
                           instructor: man.instructor, university: man.university, count: man.modules.length,
@@ -252,7 +255,7 @@ function admin_load() {
   });
   var students = sheetFor_(TABS.STUDENTS, STUDENT_HEAD).getLastRow() - 1;
   return {
-    settings: s, sections: sectionsList_(), today: today_(), semester: semesterInfo_(s, today_()),
+    email: currentEmail_(), settings: s, sections: sectionsList_(), today: today_(), semester: semesterInfo_(s, today_()),
     modules: man.modules.map(function (m) {
       var r = rows[m.n] || {};
       return { n: m.n, title: m.title, tab: m.tab, items: m.items, visible: !!r.visible, opensOn: r.opensOn || '',
