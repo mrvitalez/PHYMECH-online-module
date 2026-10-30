@@ -91,7 +91,7 @@ window.MathJax = { tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\
           " <span>Module " + n + "</span>" + badge + "</div><h3>" + esc(m.title) + "</h3><p>" + esc(m.overview) +
           '</p><ul class="topics">' + topics + "</ul>" + due + '<div class="clinks">' + links + "</div></article>";
       }).join("");
-      return '<h2 class="section">' + esc(p.title) + '</h2><p class="sub"><b>' + esc(p.span) + ".</b> " + esc(p.blurb) +
+      return '<h3 class="part">' + esc(p.title) + '</h3><p class="sub"><b>' + esc(p.span) + ".</b> " + esc(p.blurb) +
         '</p><div class="grid">' + cards + "</div>";
     }).join("");
 
@@ -102,28 +102,27 @@ window.MathJax = { tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\
     }).join("");
 
     var navItems = [["#course", "Course info"], ["#syllabus", "Syllabus"], ["#modules", "Modules"],
-      ["#requirements", "Requirements"], ["#grading", "Grading"], ["#transmutation", "Transmutation"],
+      ["#grading", "Requirements & grading"], ["#transmutation", "Transmutation"],
       ["#references", "References"], ["#consultation", "Consultation"]];
     var nav = '<nav class="top" aria-label="Home sections"><div class="in">' + navItems.map(function (x) {
       return '<a href="' + x[0] + '">' + x[1] + "</a>";
     }).join("") + "</div></nav>";
 
-    var syllabusSec = '<section id="syllabus"><h2 class="section">Syllabus</h2>' +
+    var syllabusSec = '<section id="syllabus"><h2 class="section major">Syllabus</h2>' +
       '<div class="panel syllabus-card"><div><h3>📄 ' + esc(man.course) + " · " + esc(man.courseTitle) + " course syllabus</h3>" +
       "<p>The complete outcomes-based syllabus: course outcomes, the week-by-week teaching and learning plan, " +
       "class policies, and the grading system.</p></div>" +
       (L.syllabus ? '<a class="cta" target="_blank" rel="noopener" href="' + esc(L.syllabus) + '">Open the full syllabus ↗</a>'
                   : '<span class="muted">The syllabus link has not been set yet.</span>') + "</div></section>";
 
-    var modulesSec = '<section id="modules"><h2 class="section">Modules</h2>' +
+    var modulesSec = '<section id="modules"><h2 class="section major">Modules</h2>' +
       '<p class="sub">Each module has a short discussion, worked examples, a lecture video with questions, and a graded activity.</p>' +
       parts + "</section>";
 
-    var reqSec = '<section id="requirements"><h2 class="section">Major Course Requirements</h2><div class="panel"><ol>' +
-      (syl.requirements || []).map(function (r) { return "<li>" + esc(r) + "</li>"; }).join("") + "</ol></div></section>";
-
-    var gradingSec = '<section id="grading"><h2 class="section">Grading System</h2><div class="panel"><div class="tw"><table class="dark">' +
-      "<thead><tr><th>Component</th><th class=\"c\">Weight</th></tr></thead><tbody>" +
+    var gradingSec = '<section id="grading"><h2 class="section major">Major Course Requirements and Grading System</h2>' +
+      '<div class="panel"><p class="req-line"><b>Major course requirements:</b> ' +
+      (syl.requirements || []).map(function (r) { return '<span class="req-chip">' + esc(r) + "</span>"; }).join("") + "</p>" +
+      '<div class="tw"><table class="dark"><thead><tr><th>Component</th><th class="c">Weight</th></tr></thead><tbody>' +
       (syl.grading || []).map(function (g) {
         return "<tr><td><b>" + esc(g.component) + "</b>" + (g.items.length ? '<ul class="sub-items">' +
           g.items.map(function (i) { return "<li>" + esc(i) + "</li>"; }).join("") + "</ul>" : "") +
@@ -131,17 +130,17 @@ window.MathJax = { tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\
       }).join("") + '</tbody><tfoot><tr><th>Total</th><th class="c">100%</th></tr></tfoot></table></div>' +
       '<p class="muted">The point grade is read from the transmutation table below.</p></div></section>';
 
-    var transSec = '<section id="transmutation"><h2 class="section">Transmutation Table</h2><div class="panel"><div class="tw"><table class="dark">' +
+    var transSec = '<section id="transmutation"><h2 class="section major">Transmutation Table</h2><div class="panel"><div class="tw"><table class="dark">' +
       '<thead><tr><th>Threshold</th><th class="c">Point grade</th></tr></thead><tbody>' +
       (syl.transmutation || []).map(function (t) {
         return "<tr><td>" + esc(t[0]) + '</td><td class="c">' + esc(t[1]) + "</td></tr>";
       }).join("") + "</tbody></table></div></div></section>";
 
-    var refSec = '<section id="references"><h2 class="section">References</h2><div class="panel"><ul>' +
+    var refSec = '<section id="references"><h2 class="section major">References</h2><div class="panel"><ul>' +
       (syl.references || []).map(function (r) { return "<li>" + r + "</li>"; }).join("") + "</ul>" +
       (syl.videoCredit ? '<p class="muted">' + esc(syl.videoCredit) + "</p>" : "") + "</div></section>";
 
-    var consultSec = '<section id="consultation"><h2 class="section">Consultation Hours</h2><div class="panel">' +
+    var consultSec = '<section id="consultation"><h2 class="section major">Consultation Hours</h2><div class="panel">' +
       '<div class="tw"><table class="dark"><thead><tr><th>Day</th><th>Time</th><th>Room</th></tr></thead><tbody>' +
       (syl.consultation || []).map(function (c) {
         return "<tr><td>" + esc(c.day) + "</td><td>" + esc(c.time) + "</td><td>" + esc(c.room) + "</td></tr>";
@@ -159,7 +158,7 @@ window.MathJax = { tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\
       (d.maxAttempts ? "<span>🔁 " + d.maxAttempts + " attempts per activity</span>" : "") + "</div>" +
       (facts ? '<h2 class="facts-title">Course Information</h2><dl class="facts">' + facts + "</dl>" : "") +
       notice + "</div></div></header>" + nav +
-      '<div class="wrap">' + syllabusSec + modulesSec + reqSec + gradingSec + transSec + refSec + consultSec + "</div>" + footer(man);
+      '<div class="wrap">' + syllabusSec + modulesSec + gradingSec + transSec + refSec + consultSec + "</div>" + footer(man);
     initScroll();
   }
 

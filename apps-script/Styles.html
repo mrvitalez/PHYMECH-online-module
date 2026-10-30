@@ -382,4 +382,13 @@ table.dark .sub-items { margin: 4px 0 0; padding-left: 18px; color: #C9BFE6; fon
 body.landing nav.top { margin-top: -8px; }
 body.landing a.cta { color: #2B1A00; }
 
+/* Home headings: main sections larger, the module parts as sub-headings */
+h2.section.major { font-size: clamp(1.7rem, 3.4vw, 2.15rem); margin-top: 56px; }
+h2.section.major::before { width: 30px; height: 30px; }
+h3.part { font-size: 1.12rem; font-weight: 800; color: var(--amber-2); margin: 30px 0 4px; letter-spacing: .02em;
+  display: flex; align-items: center; gap: 10px; }
+h3.part::before { content: ""; width: 14px; height: 3px; border-radius: 2px; background: var(--amber); flex: none; }
+.req-line { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 0 0 16px !important; color: #EFEAFB !important; }
+.req-chip { font-size: .85rem; font-weight: 800; color: #FFE3A6; background: rgba(255, 176, 32, .12); border: 1px solid rgba(255, 176, 32, .4); border-radius: 999px; padding: 4px 12px; }
+
 </style>
