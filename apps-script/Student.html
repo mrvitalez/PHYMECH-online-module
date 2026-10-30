@@ -95,18 +95,72 @@ window.MathJax = { tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\
         '</p><div class="grid">' + cards + "</div>";
     }).join("");
 
-    var name = d.profile ? esc(d.profile.firstName) : "";
+    var syl = d.syllabus || {};
+    var L = d.links || {};
+    var facts = (syl.courseInfo || []).map(function (f) {
+      return "<div><dt>" + esc(f[0]) + "</dt><dd>" + esc(f[1]) + "</dd></div>";
+    }).join("");
+
+    var navItems = [["#course", "Course info"], ["#syllabus", "Syllabus"], ["#modules", "Modules"],
+      ["#requirements", "Requirements"], ["#grading", "Grading"], ["#transmutation", "Transmutation"],
+      ["#references", "References"], ["#consultation", "Consultation"]];
+    var nav = '<nav class="top" aria-label="Home sections"><div class="in">' + navItems.map(function (x) {
+      return '<a href="' + x[0] + '">' + x[1] + "</a>";
+    }).join("") + "</div></nav>";
+
+    var syllabusSec = '<section id="syllabus"><h2 class="section">Syllabus</h2>' +
+      '<div class="panel syllabus-card"><div><h3>📄 ' + esc(man.course) + " · " + esc(man.courseTitle) + " course syllabus</h3>" +
+      "<p>The complete outcomes-based syllabus: course outcomes, the week-by-week teaching and learning plan, " +
+      "class policies, and the grading system.</p></div>" +
+      (L.syllabus ? '<a class="cta" target="_blank" rel="noopener" href="' + esc(L.syllabus) + '">Open the full syllabus ↗</a>'
+                  : '<span class="muted">The syllabus link has not been set yet.</span>') + "</div></section>";
+
+    var modulesSec = '<section id="modules"><h2 class="section">Modules</h2>' +
+      '<p class="sub">Each module has a short discussion, worked examples, a lecture video with questions, and a graded activity.</p>' +
+      parts + "</section>";
+
+    var reqSec = '<section id="requirements"><h2 class="section">Major Course Requirements</h2><div class="panel"><ol>' +
+      (syl.requirements || []).map(function (r) { return "<li>" + esc(r) + "</li>"; }).join("") + "</ol></div></section>";
+
+    var gradingSec = '<section id="grading"><h2 class="section">Grading System</h2><div class="panel"><div class="tw"><table class="dark">' +
+      "<thead><tr><th>Component</th><th class=\"c\">Weight</th></tr></thead><tbody>" +
+      (syl.grading || []).map(function (g) {
+        return "<tr><td><b>" + esc(g.component) + "</b>" + (g.items.length ? '<ul class="sub-items">' +
+          g.items.map(function (i) { return "<li>" + esc(i) + "</li>"; }).join("") + "</ul>" : "") +
+          '</td><td class="c">' + esc(g.weight) + "</td></tr>";
+      }).join("") + '</tbody><tfoot><tr><th>Total</th><th class="c">100%</th></tr></tfoot></table></div>' +
+      '<p class="muted">The point grade is read from the transmutation table below.</p></div></section>';
+
+    var transSec = '<section id="transmutation"><h2 class="section">Transmutation Table</h2><div class="panel"><div class="tw"><table class="dark">' +
+      '<thead><tr><th>Threshold</th><th class="c">Point grade</th></tr></thead><tbody>' +
+      (syl.transmutation || []).map(function (t) {
+        return "<tr><td>" + esc(t[0]) + '</td><td class="c">' + esc(t[1]) + "</td></tr>";
+      }).join("") + "</tbody></table></div></div></section>";
+
+    var refSec = '<section id="references"><h2 class="section">References</h2><div class="panel"><ul>' +
+      (syl.references || []).map(function (r) { return "<li>" + r + "</li>"; }).join("") + "</ul>" +
+      (syl.videoCredit ? '<p class="muted">' + esc(syl.videoCredit) + "</p>" : "") + "</div></section>";
+
+    var consultSec = '<section id="consultation"><h2 class="section">Consultation Hours</h2><div class="panel">' +
+      '<div class="tw"><table class="dark"><thead><tr><th>Day</th><th>Time</th><th>Room</th></tr></thead><tbody>' +
+      (syl.consultation || []).map(function (c) {
+        return "<tr><td>" + esc(c.day) + "</td><td>" + esc(c.time) + "</td><td>" + esc(c.room) + "</td></tr>";
+      }).join("") + "</tbody></table></div>" +
+      (L.consultation ? '<p style="margin-top:14px"><a class="cta" target="_blank" rel="noopener" href="' + esc(L.consultation) +
+        '">📅 Book a consultation ↗</a></p>' : "") + "</div></section>";
+
     app.innerHTML =
-      '<header class="hero"><div class="inner">' + heroHead(man) + '<div class="txt">' +
+      '<header class="hero" id="course"><div class="inner">' + heroHead(man) + '<div class="txt">' +
       '<span class="eyebrow">🔭 ' + esc(man.university) + " · " + esc(man.department) + "</span>" +
       "<h1><small>" + esc(man.course) + " · " + esc(man.program) + "</small>" + esc(man.courseTitle) + "</h1>" +
-      "<p>" + (name ? "Welcome back, <b>" + name + "</b>! " : "Welcome! ") +
-      "Each module has a short discussion, worked examples, a lecture video with questions, and a graded activity.</p>" +
-      '<div class="hchips">' + who() + "<span>📅 " + esc(sem.name || "") + "</span><span>✅ " + done + " of " +
-      d.modules.length + " activities done</span>" +
+      (syl.description ? '<p class="course-desc"><b>Course description.</b> ' + esc(syl.description) + "</p>" : "") +
+      '<div class="hchips">' + who() + (facts ? "" : "<span>📅 " + esc(sem.name || "") + "</span>") +
+      "<span>✅ " + done + " of " + d.modules.length + " activities done</span>" +
       (d.maxAttempts ? "<span>🔁 " + d.maxAttempts + " attempts per activity</span>" : "") + "</div>" +
-      notice + "</div></div></header>" +
-      '<div class="wrap">' + parts + "</div>" + footer(man);
+      (facts ? '<h2 class="facts-title">Course Information</h2><dl class="facts">' + facts + "</dl>" : "") +
+      notice + "</div></div></header>" + nav +
+      '<div class="wrap">' + syllabusSec + modulesSec + reqSec + gradingSec + transSec + refSec + consultSec + "</div>" + footer(man);
+    initScroll();
   }
 
   function footer(man) {
@@ -538,13 +592,13 @@ window.MathJax = { tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\
   function initScroll() {
     var progress = document.getElementById("progress"), backtop = document.getElementById("backtop");
     var links = [].slice.call(document.querySelectorAll("nav.top a:not(.home)"));
-    var sections = [].slice.call(document.querySelectorAll("main section[id]"));
+    var sections = [].slice.call(document.querySelectorAll("header.hero[id], main section[id], .wrap section[id]"));
     function update() {
       var h = document.documentElement, max = h.scrollHeight - h.clientHeight;
       progress.style.width = (max ? 100 * h.scrollTop / max : 0) + "%";
       backtop.classList.toggle("show", h.scrollTop > 500);
       var current = sections.length ? sections[0].id : "";
-      sections.forEach(function (s) { if (s.getBoundingClientRect().top <= 90) current = s.id; });
+      sections.forEach(function (s) { if (s.getBoundingClientRect().top <= 140) current = s.id; });
       links.forEach(function (a) {
         var on = a.getAttribute("href") === "#" + current;
         a.classList.toggle("active", on);
@@ -591,7 +645,7 @@ window.MathJax = { tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\
     var a = e.target.closest && e.target.closest("a[href]");
     if (!a || e.ctrlKey || e.metaKey || e.shiftKey || e.button !== 0) return;
     var href = a.getAttribute("href");
-    if (href.indexOf(BOOT.url) !== 0) return;
+    if (href.charAt(0) === "#" || a.target === "_blank" || href.indexOf(BOOT.url) !== 0) return;
     e.preventDefault();
     var m = href.match(/[?&]module=(\d+)/);
     var hash = (href.split("#")[1] || "");

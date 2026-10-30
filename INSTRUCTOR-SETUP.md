@@ -94,6 +94,14 @@ The editor adds `.html` to HTML files by itself: name them exactly `Student`, `A
   the recordbook. Settings, sections, modules, videos and the answer key stay, ready for the next semester.
   You can also archive manually by typing ARCHIVE.
 
+## Course information on the student home page
+
+The home page shows the course information, major requirements, grading system, transmutation table, references
+and consultation hours from [`content/syllabus.json`](content/syllabus.json). To change them (for example a new
+consultation schedule), edit that file on GitHub, then click **Refresh lesson content from GitHub** in the admin
+Overview tab. The **Syllabus** button and the **Book a consultation** button use the links set in the admin
+**Semester** tab.
+
 ## Updating the lessons or the code
 
 - **Lesson text and activity questions** are read from the `content/` folder of this repository. After you change a

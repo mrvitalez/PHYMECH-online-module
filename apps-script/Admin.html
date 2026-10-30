@@ -158,6 +158,10 @@ window.MathJax = { tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\
       '<div class="form-grid">' +
       '<label class="field wide">Student site address (your web app URL ending in /exec, from Deploy → Manage deployments)' +
       '<input type="text" id="studentUrl" placeholder="https://script.google.com/a/macros/rtu.edu.ph/s/…/exec" value="' + esc(s.studentUrl) + '"></label>' +
+      '<label class="field wide">Syllabus link (opened by the Syllabus button on the student home page)' +
+      '<input type="text" id="syllabusUrl" value="' + esc(s.syllabusUrl) + '"></label>' +
+      '<label class="field wide">Consultation booking link (shown under Consultation hours)' +
+      '<input type="text" id="consultationUrl" value="' + esc(s.consultationUrl) + '"></label>' +
       '<label class="field wide">Semester name (shown to students)<input type="text" id="semesterName" value="' + esc(s.semesterName) + '"></label>' +
       '<label class="field">Start date<input type="date" id="startDate" value="' + esc(s.startDate) + '"></label>' +
       '<label class="field">End date<input type="date" id="endDate" value="' + esc(s.endDate) + '"></label>' +
@@ -172,7 +176,7 @@ window.MathJax = { tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\
     document.getElementById("save").onclick = function () {
       var b = this;
       var obj = {};
-      ["studentUrl", "semesterName", "startDate", "endDate", "maxAttempts", "archiveDelayDays", "announcement"].forEach(function (k) {
+      ["studentUrl", "syllabusUrl", "consultationUrl", "semesterName", "startDate", "endDate", "maxAttempts", "archiveDelayDays", "announcement"].forEach(function (k) {
         obj[k] = document.getElementById(k).value;
       });
       obj.revealAnswers = document.getElementById("revealAnswers").checked ? "TRUE" : "FALSE";

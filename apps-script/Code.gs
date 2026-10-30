@@ -41,6 +41,8 @@ var KEY_HEAD = ['Module', 'Item', 'Type', 'Answer', 'Tolerance %'];
 var DEFAULT_SETTINGS = [
   ['studentUrl', '', 'Web app address ending in /exec (Deploy > Manage deployments). Used for all links.'],
   ['semesterName', '1st Semester, AY 2026-2027', 'Shown to students on the home page'],
+  ['syllabusUrl', 'https://docs.google.com/document/d/1YikLe0CDk3gV8dN4T5-FeNXHXYlqE6O-1PNJW1G_C-4/edit?usp=sharing', 'Opened by the Syllabus button on the student home page'],
+  ['consultationUrl', 'https://calendar.app.google/ss7QeVhVk5A3yNR38', 'Booking link shown under Consultation hours'],
   ['startDate', '', 'Semester start (YYYY-MM-DD). Before this date the modules are closed.'],
   ['endDate', '', 'Semester end (YYYY-MM-DD). After this date activities no longer accept submissions.'],
   ['maxAttempts', '2', 'Attempts allowed per student per activity (0 = unlimited)'],
@@ -120,7 +122,13 @@ function api_home() {
            instructor: man.instructor, university: man.university, department: man.department,
            program: man.program, logo: man.logo },
            semester: semesterInfo_(s, today), modules: mods, profile: profile_(email),
-           maxAttempts: Number(s.maxAttempts) || 0 };
+           maxAttempts: Number(s.maxAttempts) || 0, syllabus: syllabus_(),
+           links: { syllabus: s.syllabusUrl || '', consultation: s.consultationUrl || '' } };
+}
+
+/** Course information, grading, references and consultation hours from content/syllabus.json. */
+function syllabus_() {
+  try { return JSON.parse(content_('syllabus.json')); } catch (e) { return null; }
 }
 
 function api_module(n) {
@@ -271,7 +279,7 @@ function admin_load() {
 
 function admin_saveSettings(obj) {
   requireAdmin_();
-  var allowed = ['studentUrl', 'semesterName', 'startDate', 'endDate', 'maxAttempts', 'revealAnswers', 'autoArchive',
+  var allowed = ['studentUrl', 'syllabusUrl', 'consultationUrl', 'semesterName', 'startDate', 'endDate', 'maxAttempts', 'revealAnswers', 'autoArchive',
                  'archiveDelayDays', 'announcement'];
   var clean = {};
   allowed.forEach(function (k) { if (obj && obj[k] !== undefined) clean[k] = String(obj[k]).trim(); });
@@ -281,6 +289,9 @@ function admin_saveSettings(obj) {
   if (clean.studentUrl && !/^https:\/\/script\.google\.com\/.+\/exec$/.test(clean.studentUrl)) {
     throw new Error('The student site address must be the web app URL that ends in /exec (Deploy > Manage deployments).');
   }
+  ['syllabusUrl', 'consultationUrl'].forEach(function (k) {
+    if (clean[k] && !/^https:\/\/\S+$/.test(clean[k])) throw new Error('Links must start with https://');
+  });
   if (clean.startDate && clean.endDate && clean.endDate < clean.startDate) throw new Error('The end date is before the start date.');
   if (clean.maxAttempts !== undefined && !/^\d+$/.test(clean.maxAttempts)) throw new Error('Attempts must be a whole number.');
   if (clean.archiveDelayDays !== undefined && !/^\d+$/.test(clean.archiveDelayDays)) throw new Error('Archive delay must be a whole number of days.');

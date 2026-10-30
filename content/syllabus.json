@@ -1,0 +1,43 @@
+{
+ "source": "'25-'26 - PHY-MECH (Course Syllabus)",
+ "courseInfo": [
+  ["Course code", "PHY-MECH"],
+  ["Course title", "Mechanics"],
+  ["Credit units", "3 units"],
+  ["Contact hours", "3 hours lecture"],
+  ["Pre-requisite", "None"],
+  ["Co-requisite", "None"],
+  ["Semester", "First Semester, AY 2026-2027"],
+  ["Instructor", "Instr. Ryan M. Vitalez, LPT"]
+ ],
+ "description": "This course is preliminary and additional knowledge of physical and phenomenological occurrences in the physical and cosmological world. The student will learn how to determine the relevant physics concepts to be applied for any problems. The students will learn to use mathematical tools for every physical problem.",
+ "requirements": ["Long Examinations", "Problem Sets", "Recitation Card"],
+ "grading": [
+  {"component": "Long Examinations", "weight": "40%", "items": ["Long Examination 1", "Long Examination 2", "Long Examination 3"]},
+  {"component": "Recitation", "weight": "20%", "items": []},
+  {"component": "Written Works", "weight": "30%", "items": ["Quizzes", "Activities", "Problem Sets"]},
+  {"component": "Attendance", "weight": "10%", "items": []}
+ ],
+ "transmutation": [
+  ["97% to 100%", "1.00"],
+  ["93% to 96.99%", "1.25"],
+  ["89% to 92.99%", "1.50"],
+  ["85% to 88.99%", "1.75"],
+  ["81% to 84.99%", "2.00"],
+  ["77% to 80.99%", "2.25"],
+  ["73% to 76.99%", "2.50"],
+  ["69% to 72.99%", "2.75"],
+  ["65% to 68.99%", "3.00"],
+  ["64% to 64.99%", "4.00"],
+  ["63.99% and below", "5.00"]
+ ],
+ "references": [
+  "Young, H. D., & Freedman, R. A. <em>University Physics with Modern Physics</em>, 15th ed.",
+  "Halliday, D., Resnick, R., & Walker, J. <em>Fundamentals of Physics</em>, 11th ed."
+ ],
+ "videoCredit": "Lecture videos in the modules: MIT OpenCourseWare, 8.01 Classical Mechanics, Fall 2016 (CC BY-NC-SA 4.0), and Khan Academy (CC BY-NC-SA 3.0 US). Each video is cited on its module page.",
+ "consultation": [
+  {"day": "Wednesday", "time": "9:00 AM to 12:00 PM", "room": "RnD AS611"},
+  {"day": "Friday", "time": "9:00 AM to 11:00 PM", "room": "RnD AS611"}
+ ]
+}
