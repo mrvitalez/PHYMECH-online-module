@@ -16,7 +16,10 @@ var CONFIG = {
   DOMAIN: 'rtu.edu.ph',
   CONTENT_BASE: 'https://raw.githubusercontent.com/mrvitalez/PHYMECH-online-module/main/content/',
   TZ: 'Asia/Manila',
-  ARCHIVE_FOLDER: 'PHYMECH Archives'
+  ARCHIVE_FOLDER: 'PHYMECH Archives',
+  // Browser-tab icons (PNG files in the GitHub repository)
+  ICON_STUDENT: 'https://raw.githubusercontent.com/mrvitalez/PHYMECH-online-module/main/img/icon-student.png',
+  ICON_ADMIN: 'https://raw.githubusercontent.com/mrvitalez/PHYMECH-online-module/main/img/icon-admin.png'
 };
 
 var TABS = {
@@ -72,7 +75,7 @@ function doGet(e) {
   } catch (err) {
     boot.error = err.message;
   }
-  return app_('Student', 'PHYMECH Online Modules', boot);
+  return app_('Student', 'PHYMECH · Mechanics', boot);
 }
 
 function app_(file, title, boot) {
@@ -80,6 +83,7 @@ function app_(file, title, boot) {
   var html = HtmlService.createHtmlOutputFromFile('Styles').getContent() +
     HtmlService.createHtmlOutputFromFile(file).getContent().replace('/*BOOT*/null', json);
   return HtmlService.createHtmlOutput(html).setTitle(title)
+    .setFaviconUrl(file === 'Admin' ? CONFIG.ICON_ADMIN : CONFIG.ICON_STUDENT)
     .addMetaTag('viewport', 'width=device-width, initial-scale=1');
 }
 
@@ -88,7 +92,8 @@ function message_(title, body) {
     '<body class="landing"><header class="hero"><div class="inner"><div class="txt">' +
     '<span class="eyebrow">PHYMECH · Rizal Technological University</span><h1>' + esc_(title) + '</h1>' +
     '<p>' + body + '</p></div></div></header></body>';
-  return HtmlService.createHtmlOutput(html).setTitle(title).addMetaTag('viewport', 'width=device-width, initial-scale=1');
+  return HtmlService.createHtmlOutput(html).setTitle(title).setFaviconUrl(CONFIG.ICON_STUDENT)
+    .addMetaTag('viewport', 'width=device-width, initial-scale=1');
 }
 
 // ---------------------------------------------------------------------------
