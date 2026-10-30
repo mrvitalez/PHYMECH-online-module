@@ -32,7 +32,7 @@ window.MathJax = { tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\
               ["modules", "📚 Modules & videos"], ["key", "🔑 Answer key"], ["results", "📝 Results"],
               ["record", "📒 Recordbook"], ["archive", "🗄️ Archive"]];
 
-  document.getElementById("who").textContent = "🎓 " + (BOOT.email || "");
+  document.getElementById("who").textContent = "Signed in as " + (BOOT.email || "");
   document.getElementById("open-sheet").href = BOOT.sheetUrl || "#";
   function setStudentLink(url) {
     var a = document.getElementById("open-student");

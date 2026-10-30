@@ -348,4 +348,16 @@ table.data input.ans, table.data select.ans { min-width: 100px; }
 table.data input.remarks { min-width: 180px; }
 table.data .row-actions { flex-wrap: nowrap; }
 
+/* Read-only email detected from the Google account */
+div.field { display: flex; flex-direction: column; font-size: .85rem; font-weight: 700; color: var(--ink-soft); gap: 4px; }
+.auto-email { display: flex; align-items: center; gap: 8px; padding: 9px 11px; border-radius: 10px;
+  background: var(--plum-soft); border: 1px dashed var(--plum-3); color: var(--plum); font-size: 1rem; cursor: default; user-select: all; }
+.auto-email .addr { font-weight: 800; overflow-wrap: anywhere; flex: 1; }
+.auto-email .ok-tag { font-size: .7rem; font-weight: 850; text-transform: uppercase; letter-spacing: .05em;
+  background: var(--ok-bg); color: var(--ok); border: 1px solid var(--ok-bd); border-radius: 999px; padding: 2px 8px; white-space: nowrap; }
+.who { background: transparent !important; border: 0 !important; padding: 6px 4px !important; font-weight: 600 !important; opacity: .9; cursor: default; }
+.who b { font-weight: 800; }
+.student-grid > div.field { grid-column: 1 / -1; }
+.auto-email { max-width: 560px; }
+
 </style>

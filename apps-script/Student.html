@@ -59,7 +59,7 @@ window.MathJax = { tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\
     return '<img class="logo" src="' + esc(man.logo) + '" alt="Rizal Technological University seal">';
   }
   function who() {
-    return '<span class="who">🎓 ' + esc(BOOT.email) + '</span>';
+    return '<span class="who">Signed in as <b>' + esc(BOOT.email) + '</b></span>';
   }
 
   // ---------- home ----------
@@ -346,7 +346,8 @@ window.MathJax = { tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\
       '<div class="notice">' + status + "</div>" + d.activityHtml +
       '<form id="activity-form" novalidate' + (st.canSubmit ? "" : ' class="closed"') + ">" +
       '<div class="student"><h3>🎓 Your details</h3><div class="student-grid">' +
-      '<label class="field">RTU email<input type="text" value="' + esc(BOOT.email) + '" disabled></label>' +
+      '<div class="field">RTU email (detected automatically)<div class="auto-email" title="Detected from the Google account you are signed in with. You do not need to type it.">' +
+      '<span class="lock">🔒</span><span class="addr">' + esc(BOOT.email) + '</span><span class="ok-tag">✓ detected</span></div></div>' +
       '<label class="field">Last name<input type="text" data-student="lastName" autocomplete="family-name" value="' + esc(p.lastName || "") + '" required></label>' +
       '<label class="field">First name<input type="text" data-student="firstName" autocomplete="given-name" value="' + esc(p.firstName || "") + '" required></label>' +
       '<label class="field">Middle name<input type="text" data-student="middleName" value="' + esc(p.middleName || "") + '" placeholder="Leave blank if none"></label>' +
