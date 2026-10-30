@@ -1,4 +1,4 @@
 // ===== Instructor setting =====
 // Paste the Web app URL of the PHYMECH student site (Apps Script deployment) between the quotes.
 // Every page of this GitHub site sends students there. See INSTRUCTOR-SETUP.md.
-window.PHYMECH_STUDENT_URL = "https://script.google.com/a/macros/rtu.edu.ph/s/XXXX/exec";
+window.PHYMECH_STUDENT_URL = "https://script.google.com/a/macros/rtu.edu.ph/s/AKfycbxLc4FlIuQm0RwyjR5BRqpo2T80W7Xa2xOphNStup_RATfzk4317xJgMRihsifUaL2zyg/exec";
