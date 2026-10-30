@@ -36,6 +36,7 @@ var MODULE_HEAD = ['Module', 'Title', 'Visible', 'Opens On', 'Due On', 'Video ID
                    'Video Source', 'Source URL', 'License', 'Checkpoints (JSON)'];
 var KEY_HEAD = ['Module', 'Item', 'Type', 'Answer', 'Tolerance %'];
 var DEFAULT_SETTINGS = [
+  ['studentUrl', '', 'Web app address ending in /exec (Deploy > Manage deployments). Used for all links.'],
   ['semesterName', '1st Semester, AY 2026-2027', 'Shown to students on the home page'],
   ['startDate', '', 'Semester start (YYYY-MM-DD). Before this date the modules are closed.'],
   ['endDate', '', 'Semester end (YYYY-MM-DD). After this date activities no longer accept submissions.'],
@@ -262,13 +263,16 @@ function admin_load() {
 
 function admin_saveSettings(obj) {
   requireAdmin_();
-  var allowed = ['semesterName', 'startDate', 'endDate', 'maxAttempts', 'revealAnswers', 'autoArchive',
+  var allowed = ['studentUrl', 'semesterName', 'startDate', 'endDate', 'maxAttempts', 'revealAnswers', 'autoArchive',
                  'archiveDelayDays', 'announcement'];
   var clean = {};
   allowed.forEach(function (k) { if (obj && obj[k] !== undefined) clean[k] = String(obj[k]).trim(); });
   ['startDate', 'endDate'].forEach(function (k) {
     if (clean[k] && !/^\d{4}-\d{2}-\d{2}$/.test(clean[k])) throw new Error(k + ' must look like 2026-08-15.');
   });
+  if (clean.studentUrl && !/^https:\/\/script\.google\.com\/.+\/exec$/.test(clean.studentUrl)) {
+    throw new Error('The student site address must be the web app URL that ends in /exec (Deploy > Manage deployments).');
+  }
   if (clean.startDate && clean.endDate && clean.endDate < clean.startDate) throw new Error('The end date is before the start date.');
   if (clean.maxAttempts !== undefined && !/^\d+$/.test(clean.maxAttempts)) throw new Error('Attempts must be a whole number.');
   if (clean.archiveDelayDays !== undefined && !/^\d+$/.test(clean.archiveDelayDays)) throw new Error('Archive delay must be a whole number of days.');
@@ -844,11 +848,14 @@ function requireAdmin_() {
 }
 
 function appUrl_() {
-  // getUrl() can return the short /macros/s/... form. Opened in a browser signed in to several Google
-  // accounts, that form uses the default account and fails with "unable to open the file". The
-  // /a/macros/<domain>/ form always uses the RTU account.
-  return ScriptApp.getService().getUrl()
-    .replace(/^https:\/\/script\.google\.com\/macros\/s\//, 'https://script.google.com/a/macros/' + CONFIG.DOMAIN + '/s/');
+  // ScriptApp.getService().getUrl() is unreliable: it can return null, or the editor-only /dev test
+  // address, which gives everyone else "unable to open the file". The instructor's saved address wins.
+  var saved = settings_().studentUrl;
+  var url = /\/exec$/.test(saved || '') ? saved : String(ScriptApp.getService().getUrl() || '');
+  if (!/\/exec$/.test(url)) return '';
+  // The short /macros/s/ form opens with the browser's default Google account; the /a/macros/<domain>/
+  // form always uses the RTU account.
+  return url.replace(/^https:\/\/script\.google\.com\/macros\/s\//, 'https://script.google.com/a/macros/' + CONFIG.DOMAIN + '/s/');
 }
 
 function today_() {

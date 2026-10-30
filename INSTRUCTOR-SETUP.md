@@ -63,7 +63,9 @@ The editor adds `.html` to HTML files by itself: name them exactly `Student`, `A
 
 ## 6. First things to do in the admin site
 
-1. **Semester:** set the semester name, start date and end date. Check attempts, answer reveal and automatic archive.
+1. **Semester:** paste your web app URL (the one ending in `/exec`) into **Student site address**. All links between
+   pages use it; without it, "Open student site" does not work. Then set the semester name, start date and end
+   date, and check attempts, answer reveal and automatic archive.
 2. **Block sections:** type your sections, one per line (they appear as a dropdown in every activity).
 3. **Modules & videos:** choose which modules are visible, optional open and due dates, and check each video.
 4. Open the student site yourself and submit one activity as a test. Then, in **Results**, use **Allow retake** to
