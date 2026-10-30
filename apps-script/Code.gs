@@ -844,7 +844,11 @@ function requireAdmin_() {
 }
 
 function appUrl_() {
-  return ScriptApp.getService().getUrl();
+  // getUrl() can return the short /macros/s/... form. Opened in a browser signed in to several Google
+  // accounts, that form uses the default account and fails with "unable to open the file". The
+  // /a/macros/<domain>/ form always uses the RTU account.
+  return ScriptApp.getService().getUrl()
+    .replace(/^https:\/\/script\.google\.com\/macros\/s\//, 'https://script.google.com/a/macros/' + CONFIG.DOMAIN + '/s/');
 }
 
 function today_() {

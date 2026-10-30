@@ -153,10 +153,19 @@ window.MathJax = { tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\
     initVideo(d);
     initActivity(d);
     initScroll();
-    if (location.hash) {
-      var t = document.querySelector(location.hash);
-      if (t) setTimeout(function () { t.scrollIntoView(); }, 200);
-    }
+    if (location.hash) jumpTo(location.hash);
+  }
+
+  // Equations above the target finish rendering after the page is drawn and push it down,
+  // so scroll again once they settle.
+  function jumpTo(hash) {
+    var mine = renderCount;
+    [200, 1200, 2500].forEach(function (ms) {
+      setTimeout(function () {
+        var t = mine === renderCount && document.querySelector(hash);
+        if (t) t.scrollIntoView();
+      }, ms);
+    });
   }
 
   // ---------- video ----------
@@ -281,7 +290,7 @@ window.MathJax = { tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\
           onReady: function () {
             var dur = player.getDuration() || 0;
             times = v.checkpoints.map(function (c) { return atSeconds(c.at, dur || 600); });
-            setInterval(tick, 400);
+            videoTimer = setInterval(tick, 400);
           },
           onStateChange: function (e) {
             if (e.data === 0) {  // ended: ask anything left
@@ -303,12 +312,20 @@ window.MathJax = { tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\
         '<a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=' + encodeURIComponent(v.youtubeId) +
         '">Open it on YouTube</a> and answer the video questions below as you watch.</div>';
     }
-    var s = document.createElement("script");
-    s.src = "https://www.youtube.com/iframe_api";
-    s.onerror = noPlayer;
-    document.body.appendChild(s);
-    setTimeout(function () { if (!player) noPlayer(); }, 15000);
+    if (window.YT && YT.Player) {
+      window.onYouTubeIframeAPIReady();
+    } else if (!document.getElementById("yt-api")) {
+      var s = document.createElement("script");
+      s.id = "yt-api";
+      s.src = "https://www.youtube.com/iframe_api";
+      s.onerror = noPlayer;
+      document.body.appendChild(s);
+    }
+    var thisRender = renderCount;
+    setTimeout(function () { if (!player && thisRender === renderCount) noPlayer(); }, 15000);
   }
+  var videoTimer = null;
+  var renderCount = 0;
 
   // ---------- activity ----------
   function activitySection(d) {
@@ -536,9 +553,12 @@ window.MathJax = { tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\
         }
       });
     }
+    if (scrollHandler) removeEventListener("scroll", scrollHandler);
+    scrollHandler = update;
     addEventListener("scroll", update, { passive: true });
     update();
   }
+  var scrollHandler = null;
   document.getElementById("backtop").addEventListener("click", function () { window.scrollTo({ top: 0, behavior: "smooth" }); });
 
   function fail(msg) {
@@ -546,12 +566,49 @@ window.MathJax = { tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\
       '</p><p><a target="_top" href="' + esc(link("")) + '">Try again</a></p></section></main>';
   }
 
+  // Move between the home page and the modules inside this page. Full page loads of the web app
+  // address can fail with Google's "unable to open the file" when the browser is signed in to
+  // several Google accounts, so the links only fall back to a real page load if this fails.
+  function navigate(module, hash, push) {
+    clearInterval(videoTimer);
+    renderCount++;
+    document.body.className = module ? "" : "landing";
+    app.innerHTML = '<div class="loading"><div class="spinner"></div>Loading…</div>';
+    window.scrollTo(0, 0);
+    var p = module ? call("api_module", module) : call("api_home");
+    p.then(function (d) {
+      D = d;
+      route();
+      if (push && window.google && google.script && google.script.history) {
+        google.script.history.push({ module: module }, module ? { module: String(module) } : {}, hash || "");
+      }
+      if (hash) jumpTo(hash);
+    }).catch(function (e) { fail(e.message); });
+  }
+
+  document.addEventListener("click", function (e) {
+    var a = e.target.closest && e.target.closest("a[href]");
+    if (!a || e.ctrlKey || e.metaKey || e.shiftKey || e.button !== 0) return;
+    var href = a.getAttribute("href");
+    if (href.indexOf(BOOT.url) !== 0) return;
+    e.preventDefault();
+    var m = href.match(/[?&]module=(\d+)/);
+    var hash = (href.split("#")[1] || "");
+    navigate(m ? Number(m[1]) : 0, hash ? "#" + hash : "", true);
+  });
+
+  if (window.google && google.script && google.script.history) {
+    google.script.history.setChangeHandler(function (ev) {
+      var m = ev && ev.location && ev.location.parameter && ev.location.parameter.module;
+      navigate(m ? Number(m) : 0, "", false);
+    });
+  }
+
   function start() {
     if (BOOT.error) return fail(BOOT.error);
     D = BOOT.data;
     if (!D) {
-      var p = BOOT.module ? call("api_module", BOOT.module) : call("api_home");
-      p.then(function (d) { D = d; route(); }).catch(function (e) { fail(e.message); });
+      navigate(BOOT.module || 0, location.hash, false);
       return;
     }
     route();
