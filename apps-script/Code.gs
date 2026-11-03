@@ -463,15 +463,28 @@ function gate_(email, code, logIt) {
   var rows = sh.getRange(2, 1, sh.getLastRow() - 1, ROSTER_HEAD.length).getValues();
   code = String(code || '').trim().toUpperCase();
   var mine = -1, byCode = -1;
+  var byNumber = -1;
   for (var i = 0; i < rows.length; i++) {
     if (String(rows[i][4]).toLowerCase() === email) mine = i;
     if (code && String(rows[i][3]).toUpperCase() === code) byCode = i;
+    if (numberEmail_(rows[i][0]) === email) byNumber = i;
+  }
+  // RTU emails are <student number>@rtu.edu.ph, so a student on the class list is recognised by email alone.
+  if (mine < 0 && byNumber >= 0) {
+    mine = byNumber;
+    if (logIt) {
+      var prev = String(rows[mine][4] || '');
+      sh.getRange(mine + 2, 5, 1, 2).setValues([[email, new Date()]]);
+      access_(email, 'Recognised', rows[mine], prev ? 'Student-number email; replaces ' + prev : 'Student-number email on the class list');
+      rows[mine][4] = email;
+    }
   }
   var blocked = {
     ok: false, title: 'Enrolled students only',
-    message: 'This site is only for students enrolled in this class. Open the <b>personal link</b> your instructor, ' +
-      esc_(manifestInstructor_()) + ', sent you, signed in with <b>your own</b> @' + CONFIG.DOMAIN + ' account.' +
-      '<br><br>If you think this is a mistake, contact your instructor.<br><br>You are signed in as <b>' + esc_(email) + '</b>.'
+    message: 'This site is only for students enrolled in this class. Sign in with <b>your own</b> RTU account ' +
+      '(your student number @' + CONFIG.DOMAIN + ') and open the link again.' +
+      '<br><br>If you are enrolled and still see this, contact your instructor, ' + esc_(manifestInstructor_()) + '.' +
+      '<br><br>You are signed in as <b>' + esc_(email) + '</b>.'
   };
   if (mine >= 0) {
     if (logIt) {
@@ -513,9 +526,17 @@ function enrolledFor_(email) {
   if (!sh || sh.getLastRow() < 2) return null;
   var rows = sh.getRange(2, 1, sh.getLastRow() - 1, 5).getDisplayValues();
   for (var i = 0; i < rows.length; i++) {
-    if (rows[i][4].toLowerCase() === email) return { studentNo: rows[i][0], name: rows[i][1], blockSection: rows[i][2] };
+    if (rows[i][4].toLowerCase() === email || numberEmail_(rows[i][0]) === email) {
+      return { studentNo: rows[i][0], name: rows[i][1], blockSection: rows[i][2] };
+    }
   }
   return null;
+}
+
+/** The RTU email of a student number, e.g. 2026-101878 -> 2026-101878@rtu.edu.ph. */
+function numberEmail_(studentNo) {
+  var no = String(studentNo || '').trim().toLowerCase();
+  return no ? no + '@' + CONFIG.DOMAIN : '';
 }
 
 function access_(email, event, row, details) {

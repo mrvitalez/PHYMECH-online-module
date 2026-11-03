@@ -94,24 +94,23 @@ The editor adds `.html` to HTML files by itself: name them exactly `Student`, `A
   the recordbook. Settings, sections, modules, videos and the answer key stay, ready for the next semester.
   You can also archive manually by typing ARCHIVE.
 
-## Class list and personal links
+## Class list
 
 In the admin **Class list** tab, paste the link of your record book, check the tab name (**PHY-MECH**), and click
-**Import class list**. It reads the student numbers (column A) and names and gives every student a **personal link**
-(`…/exec?k=CODE`). The record book link is kept only in your private Sheet, not on GitHub.
+**Import class list**. It reads the student numbers (column A) and names. The record book link is kept only in your
+private Sheet, not on GitHub.
 
-- Send each student **only their own link**, privately (email or a direct message). Do not post the list in a group chat.
-- The first RTU account that opens a link is tied to that student. After that, the student can also use the plain
-  address. Their student number is filled in from the class list and cannot be changed.
-- Anyone not tied to a student on the list sees "Enrolled students only" and is recorded in the **Access log**.
-- If someone opens a link that already belongs to another student, they are blocked and the log names the student
-  whose link was shared ("BLOCKED: shared link" with that student's number and name).
-- **Unlink** frees a link (for example if a student opened it with the wrong account). **New link** replaces a link
-  that leaked.
+- Share **one** link with the whole class: https://mrvitalez.github.io/PHYMECH-online-module/
+- RTU emails are the student number + @rtu.edu.ph, so the site recognises each student on the class list by the
+  account they are signed in with. Their student number is filled in from the class list and cannot be changed.
+- Any other account sees "Enrolled students only" and is recorded in the **Access log**.
+- **Personal links** (optional) are for exceptions, such as a student whose RTU email is not their student number.
+  The first account that opens a personal link is tied to it; if another account opens it afterwards, it is blocked
+  and the log names the student whose link was shared. **Unlink** frees a link; **New link** replaces a leaked one.
 - Module pages show the student's email and student number faintly across the screen, so screenshots and printouts
   show whose account they came from.
-- You are never blocked. While the class list is empty the site is open to all RTU accounts. Re-import any time;
-  existing links and linked accounts are kept. The archive at the end of the semester clears the class list and log.
+- You are never blocked. While the class list is empty the site is open to all RTU accounts. Re-import any time
+  (for example after adds and drops). The archive at the end of the semester clears the class list and log.
 
 ## Course information on the student home page
 
